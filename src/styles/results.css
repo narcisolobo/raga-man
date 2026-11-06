@@ -53,6 +53,7 @@
 #partials-button { margin-top: 1.75rem; }
 #partials-section { margin-top: 0.25rem; }
 #partials-section .empty-note { margin-top: 2rem; }
+.section-title + .empty-note { margin-top: 0.75rem; }
 .group { margin-top: 2rem; }
 .group-head {
   display: flex;

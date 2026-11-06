@@ -46,9 +46,14 @@ body {
 
 .page {
   max-width: 30rem;
+  min-height: 100dvh;
   margin: 0 auto;
   padding: 1.25rem max(1.25rem, env(safe-area-inset-right)) 2rem max(1.25rem, env(safe-area-inset-left));
+  /* A column, so main can take up spare height and push the footer to the bottom of short pages. */
+  display: flex;
+  flex-direction: column;
 }
+.page > main { flex: 1 0 auto; }
 
 .sr-only {
   position: absolute;
@@ -206,6 +211,8 @@ html:not(.js) .field input { position: static; height: 4rem; padding: 0 1rem; bo
   outline: 3px solid var(--pencil);
   outline-offset: 3px;
 }
+
+.foot { margin-top: 2.5rem; padding-top: 0.75rem; border-top: 1px solid var(--ink); font-size: 0.8125rem; color: var(--muted); text-wrap: balance; }
 
 @media (min-width: 40rem) {
   .page { padding-top: 3rem; }

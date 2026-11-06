@@ -84,6 +84,12 @@ if (!letters) {
     heading.className = 'section-title';
     heading.textContent = view.heading;
     exactSection.replaceChildren(heading);
+    if (view.note) {
+      const note = document.createElement('p');
+      note.className = 'empty-note';
+      note.textContent = view.note;
+      exactSection.append(note);
+    }
     if (view.words.length > 0) {
       const list = document.createElement('ul');
       list.className = 'exact-list';

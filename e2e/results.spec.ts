@@ -20,14 +20,40 @@ test('a word with no other anagrams opens partials automatically', async ({ page
   await expect(page.locator('#partials-button')).toBeHidden();
 });
 
-test('an exact heading with no words leaves no dead space beneath it', async ({ page }) => {
-  for (const letters of ['firework', 'ab']) {
+test('the exact section leaves no dead space beneath its content', async ({ page }) => {
+  for (const letters of ['firework', 'ab', 'cartep', 'listen']) {
     await page.goto(`/results?letters=${letters}`);
     await expect(page.locator('#exact-section h2')).toBeVisible();
-    // Just the heading and its rule: well under the room reserved while loading.
-    const box = await page.locator('#exact-section').boundingBox();
-    expect(box!.height).toBeLessThan(50);
+    // The section must end where its last child ends: no room reserved after loading.
+    const gap = await page.locator('#exact-section').evaluate((section) => {
+      const last = section.lastElementChild!.getBoundingClientRect();
+      return section.getBoundingClientRect().bottom - last.bottom;
+    });
+    expect(gap).toBeLessThan(4);
   }
+});
+
+test('a too-short input says why there is nothing, instead of two bare "no" lines', async ({ page }) => {
+  for (const letters of ['a', 'ab', 'abc']) {
+    await page.goto(`/results?letters=${letters}`);
+    await expect(page.locator('#exact-section h2')).toHaveText('No exact matches');
+    await expect(page.locator('#exact-section')).toContainText('Words need at least four letters.');
+    await expect(page.locator('#partials-section')).toContainText('No partial matches');
+  }
+});
+
+test('longer inputs do not show the too-short note', async ({ page }) => {
+  await page.goto('/results?letters=tcaorpe');
+  await expect(page.locator('#exact-section h2')).toHaveText('No exact matches');
+  await expect(page.locator('#exact-section')).not.toContainText('at least four letters');
+});
+
+test('the results page ends with the same footer note as home', async ({ page }) => {
+  await page.goto('/');
+  const home = await page.locator('footer.foot').textContent();
+  await page.goto('/results?letters=cartep');
+  await expect(page.locator('footer.foot')).toHaveText(home!.trim());
+  await expect(page.locator('footer.foot')).toContainText('Words of four letters or more. No names, no possessives.');
 });
 
 test('a non-word keeps the plain exact heading', async ({ page }) => {
@@ -180,5 +206,49 @@ test.describe('theme', () => {
     await page.click('#theme-toggle');
     await page.goto('/results?letters=cartep');
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  });
+});
+
+test.describe('footer position', () => {
+  const footerGap = async (page: import('@playwright/test').Page) =>
+    page.evaluate(() => {
+      const foot = document.querySelector('footer.foot')!.getBoundingClientRect();
+      return { bottom: foot.bottom, viewport: window.innerHeight, docHeight: document.documentElement.scrollHeight, top: foot.top };
+    });
+
+  test('sits at the bottom of the viewport on a short results page', async ({ page }) => {
+    await page.goto('/results?letters=ab');
+    await expect(page.locator('#exact-section h2')).toBeVisible();
+    const { bottom, viewport, docHeight } = await footerGap(page);
+    // The page's own 2rem bottom padding is all that remains beneath it, and nothing scrolls.
+    expect(viewport - bottom).toBeLessThanOrEqual(34);
+    expect(viewport - bottom).toBeGreaterThanOrEqual(30);
+    expect(docHeight).toBeLessThanOrEqual(viewport);
+  });
+
+  test('sits at the bottom of the viewport on the home page', async ({ page }) => {
+    await page.goto('/');
+    const { bottom, viewport, docHeight } = await footerGap(page);
+    expect(viewport - bottom).toBeLessThanOrEqual(34);
+    expect(docHeight).toBeLessThanOrEqual(viewport);
+  });
+
+  test('follows the content on a long page instead of overlapping it', async ({ page }) => {
+    await page.goto('/results?letters=elgnarts');
+    await page.click('#partials-button');
+    const lastGroup = page.locator('#partials-section .group').last();
+    await expect(lastGroup).toBeVisible();
+    const groupBottom = (await lastGroup.boundingBox())!.y + (await lastGroup.boundingBox())!.height;
+    const { top, bottom, docHeight } = await footerGap(page);
+    expect(top).toBeGreaterThanOrEqual(groupBottom + 36);
+    expect(docHeight - bottom).toBeLessThanOrEqual(34);
+  });
+
+  test('stays at the bottom of a tall desktop window too', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/results?letters=ab');
+    await expect(page.locator('#exact-section h2')).toBeVisible();
+    const { bottom, viewport } = await footerGap(page);
+    expect(viewport - bottom).toBeLessThanOrEqual(34);
   });
 });
