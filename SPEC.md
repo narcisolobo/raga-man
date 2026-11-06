@@ -16,7 +16,7 @@ Success: on a phone, a player types their leftover letters and sees the answer w
 
 ## Non-goals (v1)
 
-- Scrabble features: blank tiles / wildcards, scoring, board or rack helpers (planned for v2).
+- Scrabble features: blank tiles / wildcards, scoring, board or rack helpers (out of scope for raga-man).
 - Visual design. Build with plain, functional, unstyled-ish markup. A separate design pass (the `impeccable` skill) happens after the app works. Do not invest in look and feel, but do keep markup semantic and accessible so the design pass has good bones.
 - Multi-word solving. The user types the letters for all remaining words and scans the length-grouped partials themselves; the app does not search for word pairs that together use every letter.
 - Accounts, history, saving, sharing.
@@ -100,7 +100,7 @@ Each milestone ends in something checkable. *(Author's proposal; the implementat
 4. **Partial matches.** The "Show partial matches" button, auto-open when there are no exact matches, length groups, and "Show more". The trie data loads only when needed. Done when the full flow works and the home page downloads no word data.
 5. **Deploy.** Static build deployed to Cloudflare Workers static assets. Done when the live URL works on a real phone.
 
-Design polish (the `impeccable` pass) and Scrabble mode come after milestone 5 and are separate projects.
+Design polish (the `impeccable` pass) comes after milestone 5 and is a separate project.
 
 ## Left to the builder
 
@@ -109,8 +109,3 @@ Design polish (the `impeccable` pass) and Scrabble mode come after milestone 5 a
 - Exact empty / over-limit input behavior (within the rules above).
 - Test tooling.
 - Worker name, compatibility date, and the rest of the Cloudflare account setup.
-
-## Open for v2
-
-- Scrabble mode (wildcards / blank tiles).
-- Visual design pass.
