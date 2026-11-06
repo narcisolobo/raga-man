@@ -1,6 +1,8 @@
-import { loadExact } from '../lib/data';
+import { loadExact, loadTrie } from '../lib/data';
 import { findExact } from '../lib/exact';
 import { normalizeLetters } from '../lib/letters';
+import { searchPartials } from '../lib/trie';
+import { renderPartialGroups } from './partials';
 
 const letters = normalizeLetters(new URLSearchParams(location.search).get('letters') ?? '');
 if (!letters) {
@@ -11,6 +13,8 @@ if (!letters) {
   const editForm = document.getElementById('edit-form') as HTMLFormElement;
   const editInput = document.getElementById('edit-input') as HTMLInputElement;
   const exactSection = document.getElementById('exact-section')!;
+  const partialsButton = document.getElementById('partials-button') as HTMLButtonElement;
+  const partialsSection = document.getElementById('partials-section')!;
 
   display.textContent = letters;
 
@@ -42,5 +46,20 @@ if (!letters) {
       list.append(item);
     }
     exactSection.append(list);
+  }
+
+  let partialsStarted = false;
+  async function showPartials(): Promise<void> {
+    if (partialsStarted) return;
+    partialsStarted = true;
+    partialsButton.hidden = true;
+    renderPartialGroups(partialsSection, searchPartials(await loadTrie(), letters));
+  }
+
+  if (exact.length === 0) {
+    await showPartials();
+  } else {
+    partialsButton.hidden = false;
+    partialsButton.addEventListener('click', () => void showPartials());
   }
 }
