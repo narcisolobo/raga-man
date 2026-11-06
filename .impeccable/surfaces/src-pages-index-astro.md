@@ -18,8 +18,8 @@ A public Strands player on a phone with a few leftover letters. Type them and re
 - One line: "Find every word hiding in your leftover letters."
 - A row of letter squares as the input, over a real labelled `<input>`; autofocus on load.
 - Input-rules hint (spaces, digits and punctuation ignored; up to 48 letters), a full-width Solve button, and a tappable example (`PLEATS`) that fills the input and submits.
-- Letters show uppercase; repeats count; non-letters are shown as ignored; empty input does nothing; the cap at 48 is stated in text as well as colour.
-- 4-12 letters fit one row; longer input wraps, and squares never drop below a thumb-sized target.
+- Letters show uppercase; repeats count; non-letters are shown as ignored; empty input does not navigate: it focuses the input and says "Type some letters first."; the cap at 48 is stated in text as well as colour.
+- A full first row of 8 empty squares is always shown (so the field reads as a grid to fill), then whole rows of 8 as letters are added; 12 letters take two rows. Squares stay about 40px or larger; the whole field is the tap target.
 
 ## Theme
 Follows `prefers-color-scheme` by default. A masthead toggle (accessible name, `aria-pressed`, at least 44px target) flips it; the choice is remembered per browser, with storage wrapped in try/catch, and applied before first paint so there is no flash. Until the visitor chooses, the page follows system changes. Both themes meet WCAG 2.2 AA. Dark is a deliberate inverse, not a colour flip.
