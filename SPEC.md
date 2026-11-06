@@ -1,4 +1,4 @@
-# Anagram Solver: SPEC
+# raga-man: SPEC
 
 ## Intent
 
