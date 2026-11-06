@@ -1,3 +1,36 @@
 ---
 ---
-<html lang="en"><head><meta charset="utf-8" /><title>Anagram Solver</title></head><body><h1>Anagram Solver</h1></body></html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Anagram Solver</title>
+  </head>
+  <body>
+    <main>
+      <h1>Anagram Solver</h1>
+      <form id="solve-form" method="get" action="/results">
+        <label for="letters">Letters</label>
+        <input id="letters" name="letters" type="text" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" />
+        <button type="submit">Solve</button>
+      </form>
+    </main>
+    <style>
+      #letters { text-transform: uppercase; }
+    </style>
+    <script>
+      import { normalizeLetters } from '../lib/letters';
+
+      const form = document.getElementById('solve-form') as HTMLFormElement;
+      const input = document.getElementById('letters') as HTMLInputElement;
+      form.addEventListener('submit', (event) => {
+        const letters = normalizeLetters(input.value);
+        if (!letters) {
+          event.preventDefault();
+          return;
+        }
+        input.value = letters;
+      });
+    </script>
+  </body>
+</html>
