@@ -1,36 +1,74 @@
 ---
+import Base from '../layouts/Base.astro';
+import { MAX_LETTERS } from '../lib/letters';
 ---
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>raga-man</title>
-  </head>
-  <body>
-    <main>
-      <h1>raga-man</h1>
-      <form id="solve-form" method="get" action="/results">
-        <label for="letters">Letters</label>
-        <input id="letters" name="letters" type="text" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" />
-        <button type="submit">Solve</button>
-      </form>
-    </main>
-    <style>
-      #letters { text-transform: uppercase; }
-    </style>
-    <script>
-      import { normalizeLetters } from '../lib/letters';
+<Base title="raga-man" description="Find every word hiding in your leftover letters.">
+  <main>
+    <h1 class="headline">Find every word hiding in your leftover letters.</h1>
 
-      const form = document.getElementById('solve-form') as HTMLFormElement;
-      const input = document.getElementById('letters') as HTMLInputElement;
-      form.addEventListener('submit', (event) => {
-        const letters = normalizeLetters(input.value);
-        if (!letters) {
-          event.preventDefault();
-          return;
-        }
-        input.value = letters;
-      });
-    </script>
-  </body>
-</html>
+    <form id="solve-form" method="get" action="/results">
+      <div class="field-head">
+        <label for="letters">Letters</label>
+        <span id="count" class="count" aria-hidden="true">0 / {MAX_LETTERS}</span>
+      </div>
+      <div class="field">
+        <div id="squares" class="squares" aria-hidden="true">
+          <span class="sq is-active"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span>
+        </div>
+        <input
+          id="letters"
+          name="letters"
+          type="text"
+          enterkeyhint="go"
+          autofocus
+          autocomplete="off"
+          autocapitalize="characters"
+          autocorrect="off"
+          spellcheck="false"
+          aria-describedby="hint status"
+        />
+      </div>
+      <p id="hint" class="hint">Spaces, digits and punctuation are ignored. Up to {MAX_LETTERS} letters.</p>
+      <p id="status" class="status" role="status"></p>
+      <button class="solve" type="submit">Solve</button>
+    </form>
+
+    <p class="example">No letters handy? Try <a href="/results?letters=pleats">PLEATS</a></p>
+  </main>
+
+  <footer slot="footer" class="foot">
+    <p>Words of four letters or more. No names, no possessives.</p>
+  </footer>
+
+  <script>
+    import '../scripts/home';
+  </script>
+</Base>
+
+<style is:global>
+  .headline {
+    margin-top: 2rem;
+    font: 700 1.625rem/1.2 var(--display);
+    text-wrap: balance;
+  }
+
+  .example { margin-top: 1.25rem; text-align: center; font-size: 0.9375rem; color: var(--muted); }
+  .example a {
+    display: inline-block;
+    padding: 0.5rem 0.25rem;
+    color: var(--pencil);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+  .example a:focus-visible {
+    outline: 3px solid var(--pencil);
+    outline-offset: 3px;
+  }
+
+  @media (min-width: 40rem) {
+    .headline { font-size: 2rem; }
+  }
+</style>

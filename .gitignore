@@ -5,3 +5,5 @@ dist/
 public/data/
 test-results/
 .wrangler/
+.impeccable/mocks/
+.impeccable/review/
