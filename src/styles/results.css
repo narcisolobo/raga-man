@@ -1,0 +1,87 @@
+/* Results page. Inherits every token from global.css; adds only what lists need. */
+
+.back { margin-top: 0.75rem; }
+.back a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--pencil);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.back a:focus-visible {
+  outline: 3px solid var(--pencil);
+  outline-offset: 3px;
+}
+
+/* Your letters: label row with the pencil, then read-only squares. */
+.letters { margin-top: 0.5rem; }
+.letters .field-head { margin-top: 0; align-items: center; }
+.letters .field-head .label { font-family: var(--sans); }
+.letters .icon-button { margin-right: -0.5rem; }
+.letters .squares { margin-top: 0.25rem; }
+#letters-display { text-transform: uppercase; }
+#edit-form { margin-top: 0.5rem; }
+#edit-form .field-head { margin-top: 0; }
+#edit-cancel { margin-top: 0.75rem; }
+
+/* Exact matches: ruled rows of large, bold, lowercase words. */
+.exact { margin-top: 2rem; }
+/* Reserve room only while the word list loads, so nothing jumps when it arrives. */
+.exact.is-loading { min-height: 5.5rem; }
+.section-title,
+.group-head h3 {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.section-title { padding-bottom: 0.5rem; border-bottom: 2px solid var(--ink); }
+.exact-list { list-style: none; padding: 0; }
+.exact-list li {
+  padding: 0.625rem 0;
+  border-bottom: 1px solid var(--ink);
+  font: 700 clamp(1.5rem, 7vw, 2rem)/1.2 var(--sans);
+  overflow-wrap: anywhere;
+}
+.empty-note { font-size: 0.9375rem; color: var(--muted); }
+.error-note { font-size: 0.9375rem; font-weight: 600; }
+
+/* Partial matches: groups by length, longest first, words flowing in columns. */
+#partials-button { margin-top: 1.75rem; }
+#partials-section { margin-top: 0.25rem; }
+#partials-section .empty-note { margin-top: 2rem; }
+.group { margin-top: 2rem; }
+.group-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--ink);
+}
+.group-count { font-size: 0.8125rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.word-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 0.5rem;
+  column-width: 9rem;
+  column-gap: 1.25rem;
+  column-rule: 1px solid var(--muted);
+}
+.word-list li {
+  break-inside: avoid;
+  padding: 0.25rem 0;
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+.group .btn-secondary { margin-top: 1rem; height: 3rem; }
+
+/* Programmatic focus targets after the visitor opens or extends the partial lists. */
+.group-head h3:focus-visible,
+.word-list li:focus-visible,
+.empty-note:focus-visible {
+  outline: 3px solid var(--pencil);
+  outline-offset: 3px;
+}

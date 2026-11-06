@@ -1,8 +1,10 @@
 import { loadExact, loadTrie } from '../lib/data';
 import { findExact } from '../lib/exact';
+import { presentExact } from '../lib/exact-view';
 import { normalizeLetters } from '../lib/letters';
 import { searchPartials } from '../lib/trie';
-import { renderPartialGroups } from './partials';
+import { mountLetterField, renderStaticSquares } from './letter-field';
+import { renderPartialGroups, summarizePartials } from './partials';
 
 const LOAD_ERROR = "Couldn't load the word list. Check your connection and try again.";
 
@@ -10,70 +12,125 @@ const letters = normalizeLetters(new URLSearchParams(location.search).get('lette
 if (!letters) {
   location.replace('/');
 } else {
+  const lettersBlock = document.getElementById('letters-block')!;
   const display = document.getElementById('letters-display')!;
-  const editButton = document.getElementById('edit-letters')!;
+  const pageTitle = document.getElementById('page-title')!;
+  const partialsStatus = document.getElementById('partials-status')!;
+  const editButton = document.getElementById('edit-letters') as HTMLButtonElement;
   const editForm = document.getElementById('edit-form') as HTMLFormElement;
   const editInput = document.getElementById('edit-input') as HTMLInputElement;
+  const editStatus = document.getElementById('edit-status')!;
+  const editCancel = document.getElementById('edit-cancel') as HTMLButtonElement;
   const exactSection = document.getElementById('exact-section')!;
   const partialsButton = document.getElementById('partials-button') as HTMLButtonElement;
   const partialsSection = document.getElementById('partials-section')!;
 
-  display.textContent = letters;
+  renderStaticSquares(display, letters);
+  pageTitle.textContent = `Results for ${letters}`;
 
-  editButton.addEventListener('click', () => {
+  const field = mountLetterField({
+    input: editInput,
+    squares: document.getElementById('edit-squares')!,
+    count: document.getElementById('edit-count'),
+    status: editStatus,
+  });
+
+  function openEdit(): void {
     editInput.value = letters;
+    lettersBlock.hidden = true;
     editForm.hidden = false;
-    display.hidden = true;
-    editButton.hidden = true;
     editInput.focus();
+    editInput.setSelectionRange(letters.length, letters.length);
+    field.render();
+  }
+  function closeEdit(): void {
+    editForm.hidden = true;
+    lettersBlock.hidden = false;
+    editStatus.textContent = '';
+    editButton.focus();
+  }
+
+  editButton.addEventListener('click', openEdit);
+  editCancel.addEventListener('click', closeEdit);
+  editForm.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeEdit();
   });
   editForm.addEventListener('submit', (event) => {
     const next = normalizeLetters(editInput.value);
     if (!next) {
       event.preventDefault();
+      // Focus first: focusing re-renders, which would clear the message.
+      editInput.focus();
+      editStatus.textContent = 'Type some letters first.';
       return;
     }
     editInput.value = next;
   });
 
-  let exact: string[] = [];
+  // Show a plain line while the word list loads, so nothing jumps when it arrives.
+  const loading = document.createElement('p');
+  loading.className = 'empty-note';
+  loading.textContent = 'Looking up words…';
+  exactSection.classList.add('is-loading');
+  exactSection.replaceChildren(loading);
+
+  let openPartials = false;
   let exactFailed = false;
   try {
-    exact = findExact(await loadExact(), letters);
+    const view = presentExact(findExact(await loadExact(), letters), letters);
+    exactSection.classList.remove('is-loading');
+    openPartials = view.openPartials;
+    const heading = document.createElement('h2');
+    heading.className = 'section-title';
+    heading.textContent = view.heading;
+    exactSection.replaceChildren(heading);
+    if (view.words.length > 0) {
+      const list = document.createElement('ul');
+      list.className = 'exact-list';
+      for (const word of view.words) {
+        const item = document.createElement('li');
+        item.textContent = word;
+        list.append(item);
+      }
+      exactSection.append(list);
+    }
   } catch {
     exactFailed = true;
-  }
-  const heading = document.createElement('h2');
-  heading.textContent = exactFailed ? LOAD_ERROR : exact.length > 0 ? 'Exact matches' : 'No exact matches';
-  exactSection.append(heading);
-  if (exact.length > 0) {
-    const list = document.createElement('ul');
-    for (const word of exact) {
-      const item = document.createElement('li');
-      item.textContent = word;
-      list.append(item);
-    }
-    exactSection.append(list);
+    exactSection.classList.remove('is-loading');
+    const message = document.createElement('p');
+    message.className = 'error-note';
+    message.textContent = LOAD_ERROR;
+    exactSection.replaceChildren(message);
   }
 
   let partialsStarted = false;
-  async function showPartials(): Promise<void> {
+  /** `userInitiated` is true when the visitor pressed the button: only then does focus move. */
+  async function showPartials(userInitiated: boolean): Promise<void> {
     if (partialsStarted) return;
     partialsStarted = true;
-    partialsButton.hidden = true;
     try {
-      renderPartialGroups(partialsSection, searchPartials(await loadTrie(), letters));
+      const groups = searchPartials(await loadTrie(), letters);
+      const target = renderPartialGroups(partialsSection, groups);
+      // The lists are not a live region (thousands of words); a short status says what arrived.
+      partialsStatus.textContent = summarizePartials(groups);
+      // The button had focus and is about to hide: move focus on, so it is not dropped to the page.
+      partialsButton.hidden = true;
+      if (userInitiated) target?.focus();
     } catch {
-      partialsSection.textContent = LOAD_ERROR;
+      const message = document.createElement('p');
+      message.className = 'error-note';
+      message.textContent = LOAD_ERROR;
+      partialsSection.replaceChildren(message);
       partialsStarted = false;
       partialsButton.hidden = false;
+      if (userInitiated) partialsButton.focus();
     }
   }
 
-  if (exact.length === 0 && !exactFailed) {
-    await showPartials();
+  if (openPartials && !exactFailed) {
+    await showPartials(false);
   } else {
     partialsButton.hidden = false;
-    partialsButton.addEventListener('click', () => void showPartials());
+    partialsButton.addEventListener('click', () => void showPartials(true));
   }
 }

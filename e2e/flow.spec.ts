@@ -2,9 +2,9 @@ import { test, expect } from '@playwright/test';
 
 test('home -> results -> partials -> edit letters', async ({ page }) => {
   await page.goto('/');
-  await page.fill('#letters', 'C A R P E T');
+  await page.fill('#letters', 'C A R T E P');
   await page.click('button[type=submit]');
-  await expect(page).toHaveURL(/\/results\?letters=carpet$/);
+  await expect(page).toHaveURL(/\/results\?letters=cartep$/);
   await expect(page.locator('#letters-display')).toHaveCSS('text-transform', 'uppercase');
   await expect(page.locator('#exact-section')).toContainText('carpet');
 
@@ -21,7 +21,7 @@ test('home -> results -> partials -> edit letters', async ({ page }) => {
   await expect(headings).toHaveCount(2);
 
   await page.click('button[aria-label="Edit letters"]');
-  await expect(page.locator('#edit-input')).toHaveValue('carpet');
+  await expect(page.locator('#edit-input')).toHaveValue('cartep');
   await expect(page.locator('#edit-input')).toHaveCSS('text-transform', 'uppercase');
   await page.fill('#edit-input', 'RACE');
   await page.click('#edit-form button[type=submit]');
@@ -59,7 +59,7 @@ test('long input is truncated to 48 letters', async ({ page }) => {
 
 test('a failed trie fetch shows a message and can be retried', async ({ page }) => {
   await page.route('**/data/trie.txt', (route) => route.abort());
-  await page.goto('/results?letters=carpet');
+  await page.goto('/results?letters=cartep');
   await page.click('#partials-button');
   await expect(page.locator('#partials-section')).toContainText("Couldn't load");
   await expect(page.locator('#partials-button')).toBeVisible();
