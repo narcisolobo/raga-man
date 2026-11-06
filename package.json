@@ -1,0 +1,31 @@
+{
+  "name": "anagram-solver",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "node": ">=26"
+  },
+  "scripts": {
+    "dev": "pnpm build:data && astro dev",
+    "build": "pnpm build:data && astro check && astro build",
+    "preview": "astro preview",
+    "test": "vitest run",
+    "build:data": "tsx scripts/build-data.ts",
+    "test:e2e": "playwright test",
+    "deploy:cf": "pnpm build && wrangler deploy"
+  },
+  "dependencies": {
+    "astro": "^7.4.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.6",
+    "happy-dom": "^21.0.4",
+    "tsx": "^4.23.15",
+    "typescript": "~6.0.3",
+    "vitest": "^5.1.0",
+    "wrangler": "^4.157.0"
+  }
+}

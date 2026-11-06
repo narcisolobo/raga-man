@@ -1,0 +1,32 @@
+---
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Results - Anagram Solver</title>
+  </head>
+  <body>
+    <main>
+      <p><a href="/">New search</a></p>
+      <h1>
+        <span id="letters-display"></span>
+        <button id="edit-letters" type="button" aria-label="Edit letters">✎</button>
+      </h1>
+      <form id="edit-form" method="get" action="/results" hidden>
+        <label for="edit-input">Letters</label>
+        <input id="edit-input" name="letters" type="text" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" />
+        <button type="submit">Solve</button>
+      </form>
+      <section id="exact-section" aria-live="polite"></section>
+      <button id="partials-button" type="button" hidden>Show partial matches</button>
+      <section id="partials-section" aria-live="polite"></section>
+    </main>
+    <style>
+      #letters-display, #edit-input { text-transform: uppercase; }
+    </style>
+    <script>
+      import '../scripts/results';
+    </script>
+  </body>
+</html>
