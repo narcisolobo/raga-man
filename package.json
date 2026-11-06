@@ -11,7 +11,8 @@
     "build": "pnpm build:data && astro check && astro build",
     "preview": "astro preview",
     "test": "vitest run",
-    "build:data": "tsx scripts/build-data.ts"
+    "build:data": "tsx scripts/build-data.ts",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "astro": "^7.4.5"
@@ -23,6 +24,7 @@
     "happy-dom": "^21.0.4",
     "tsx": "^4.23.15",
     "typescript": "~6.0.3",
-    "vitest": "^5.1.0"
+    "vitest": "^5.1.0",
+    "wrangler": "^4.157.0"
   }
 }
