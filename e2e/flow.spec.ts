@@ -56,3 +56,20 @@ test('long input is truncated to 48 letters', async ({ page }) => {
   await page.click('button[type=submit]');
   await expect(page).toHaveURL(new RegExp(`letters=a{48}$`));
 });
+
+test('a failed trie fetch shows a message and can be retried', async ({ page }) => {
+  await page.route('**/data/trie.txt', (route) => route.abort());
+  await page.goto('/results?letters=carpet');
+  await page.click('#partials-button');
+  await expect(page.locator('#partials-section')).toContainText("Couldn't load");
+  await expect(page.locator('#partials-button')).toBeVisible();
+  await page.unroute('**/data/trie.txt');
+  await page.click('#partials-button');
+  await expect(page.locator('#partials-section h3').first()).toHaveText('5 letters');
+});
+
+test('a failed exact fetch shows a message instead of a blank page', async ({ page }) => {
+  await page.route('**/data/exact.json', (route) => route.fulfill({ status: 404, body: 'nope' }));
+  await page.goto('/results?letters=carpet');
+  await expect(page.locator('#exact-section')).toContainText("Couldn't load");
+});

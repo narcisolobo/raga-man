@@ -14,7 +14,7 @@
 
 - TypeScript 6 (pin to the 6.x line); Astro; `pnpm` for all install, build and test commands; commit `pnpm-lock.yaml`.
 - Target Node 26, recorded in `.nvmrc` and `engines` in `package.json`. If install, `astro check` or `astro build` fail on Node 26, fall back to Node 22 LTS and tell the user.
-- Static site only, no adapter. Deploy to Cloudflare Workers static assets: `wrangler.jsonc` with `assets.directory` `./dist`; `pnpm astro build` then `pnpm wrangler deploy`.
+- Static site only, no adapter. Deploy to Cloudflare Workers static assets: `wrangler.jsonc` with `assets.directory` `./dist`; `pnpm run deploy:cf`.
 - Word list: standard Debian `wamerican` (not `-large`/`-huge`/`-insane`). Keep only words that are entirely lowercase a-z and at least 4 letters.
 - Partial matches: length >= 4 and shorter than the input; grouped by length, longest first; words alphabetical within a group; never repeat exact matches.
 - Input: lowercase it, ignore non-letters, cap at 48 letters, duplicates count. Empty after normalizing does nothing.

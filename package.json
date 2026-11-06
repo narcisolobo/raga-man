@@ -7,12 +7,13 @@
     "node": ">=26"
   },
   "scripts": {
-    "dev": "astro dev",
+    "dev": "pnpm build:data && astro dev",
     "build": "pnpm build:data && astro check && astro build",
     "preview": "astro preview",
     "test": "vitest run",
     "build:data": "tsx scripts/build-data.ts",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "deploy:cf": "pnpm build && wrangler deploy"
   },
   "dependencies": {
     "astro": "^7.4.5"

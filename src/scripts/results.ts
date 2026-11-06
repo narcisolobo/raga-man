@@ -4,6 +4,8 @@ import { normalizeLetters } from '../lib/letters';
 import { searchPartials } from '../lib/trie';
 import { renderPartialGroups } from './partials';
 
+const LOAD_ERROR = "Couldn't load the word list. Check your connection and try again.";
+
 const letters = normalizeLetters(new URLSearchParams(location.search).get('letters') ?? '');
 if (!letters) {
   location.replace('/');
@@ -34,9 +36,15 @@ if (!letters) {
     editInput.value = next;
   });
 
-  const exact = findExact(await loadExact(), letters);
+  let exact: string[] = [];
+  let exactFailed = false;
+  try {
+    exact = findExact(await loadExact(), letters);
+  } catch {
+    exactFailed = true;
+  }
   const heading = document.createElement('h2');
-  heading.textContent = exact.length > 0 ? 'Exact matches' : 'No exact matches';
+  heading.textContent = exactFailed ? LOAD_ERROR : exact.length > 0 ? 'Exact matches' : 'No exact matches';
   exactSection.append(heading);
   if (exact.length > 0) {
     const list = document.createElement('ul');
@@ -53,10 +61,16 @@ if (!letters) {
     if (partialsStarted) return;
     partialsStarted = true;
     partialsButton.hidden = true;
-    renderPartialGroups(partialsSection, searchPartials(await loadTrie(), letters));
+    try {
+      renderPartialGroups(partialsSection, searchPartials(await loadTrie(), letters));
+    } catch {
+      partialsSection.textContent = LOAD_ERROR;
+      partialsStarted = false;
+      partialsButton.hidden = false;
+    }
   }
 
-  if (exact.length === 0) {
+  if (exact.length === 0 && !exactFailed) {
     await showPartials();
   } else {
     partialsButton.hidden = false;

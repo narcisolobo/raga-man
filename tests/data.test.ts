@@ -13,3 +13,19 @@ describe('loadExact', () => {
     expect(fetchMock).toHaveBeenCalledWith('/data/exact.json');
   });
 });
+
+describe('loader failures', () => {
+  it('rejects on a non-OK response and retries on the next call', async () => {
+    vi.resetModules();
+    const { loadTrie } = await import('../src/lib/data');
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(new Response('<html>nope</html>', { status: 404 }))
+      .mockResolvedValueOnce(new Response('c(a(r(e$t$)))'));
+    vi.stubGlobal('fetch', fetchMock);
+    await expect(loadTrie()).rejects.toThrow();
+    const trie = await loadTrie();
+    expect(trie.children.has('c')).toBe(true);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+});

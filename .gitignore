@@ -4,3 +4,4 @@ dist/
 .astro/
 public/data/
 test-results/
+.wrangler/
