@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .t{fill:#121413}.l{fill:#e3e5e2}.b{fill:#2748a8}
+    @media (prefers-color-scheme: dark){.t{fill:#e6e9e5}.l{fill:#16191a}.b{fill:#9db3f2}}
+  </style>
+  <rect class="t" width="32" height="32"/>
+  <path class="l" transform="translate(6.93 23.68) scale(0.0405 -0.0405)" d="M40 24H78Q87 24 90.5 27.5Q94 31 94 40V434Q94 443 90.5 446.5Q87 450 78 450H40V474H210V375L215 374Q231 420 260.5 453.0Q290 486 326 486Q362 486 385.0 460.0Q408 434 408 394Q408 357 387.0 330.5Q366 304 335 304Q308 304 289.0 320.5Q270 337 270 361Q270 385 294 413Q308 429 308 436Q308 446 297 446Q277 446 256.5 417.0Q236 388 223.0 341.0Q210 294 210 241V40Q210 31 213.5 27.5Q217 24 226 24H258V0H40Z"/>
+  <rect class="b" x="7" y="25.5" width="18" height="3"/>
+</svg>
