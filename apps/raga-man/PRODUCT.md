@@ -19,7 +19,7 @@ Built for the end-of-Strands moment: exact matches first, partial matches on dem
 Phone first, desktop second. Used in short bursts, often one-handed, usually with another app (the puzzle) a swipe away. The results page works from the URL alone (shareable, refreshable); there is no client-side state beyond the DOM. Typical input is 4-12 letters, capped at 48 (a full Strands board).
 
 ## Capabilities and Constraints
-- Home (`/`): one letters input and a Solve button. Results (`/results?letters=...`): normalized letters with a pencil button to edit, a link back to a fresh search, exact matches, a "Show partial matches" button.
+- Home (`/`): one letters input and a Solve button. Results (`/results?letters=...`): normalized letters with a pencil button to edit, a link back to a fresh search, exact matches, a "Show partial anagrams" button.
 - Partial matches: words built from a subset of the letters, length 4 or more and shorter than the input, grouped by length (longest first), alphabetical within a group, 50 words per group with "Show more". Opened automatically when there are no exact matches.
 - Letters display as uppercase everywhere; underlying values and results are lowercase. Non-letters are ignored; duplicate letters are counted.
 - Word list: Debian SCOWL `wamerican`, filtered to lowercase a-z, 4+ letters.

@@ -3,9 +3,9 @@ import { test, expect } from '@playwright/test';
 const exactWords = (page: import('@playwright/test').Page) =>
   page.locator('#exact-section li').allTextContents();
 
-test('the input itself is hidden from exact matches and the heading says so', async ({ page }) => {
+test('the input itself is hidden from the anagrams', async ({ page }) => {
   await page.goto('/results?letters=listen');
-  await expect(page.locator('#exact-section h2')).toHaveText('Other exact matches');
+  await expect(page.locator('#exact-section h2')).toHaveText('Anagrams');
   const words = await exactWords(page);
   expect(words).toContain('silent');
   expect(words).not.toContain('listen');
@@ -14,7 +14,7 @@ test('the input itself is hidden from exact matches and the heading says so', as
 
 test('a word with no other anagrams opens partials automatically', async ({ page }) => {
   await page.goto('/results?letters=firework');
-  await expect(page.locator('#exact-section h2')).toHaveText('No other exact matches');
+  await expect(page.locator('#exact-section h2')).toHaveText('No anagrams');
   await expect(page.locator('#exact-section li')).toHaveCount(0);
   await expect(page.locator('#partials-section h3').first()).toBeVisible();
   await expect(page.locator('#partials-button')).toBeHidden();
@@ -36,15 +36,15 @@ test('the exact section leaves no dead space beneath its content', async ({ page
 test('a too-short input says why there is nothing, instead of two bare "no" lines', async ({ page }) => {
   for (const letters of ['a', 'ab', 'abc']) {
     await page.goto(`/results?letters=${letters}`);
-    await expect(page.locator('#exact-section h2')).toHaveText('No exact matches');
+    await expect(page.locator('#exact-section h2')).toHaveText('No anagrams');
     await expect(page.locator('#exact-section')).toContainText('Words need at least four letters.');
-    await expect(page.locator('#partials-section')).toContainText('No partial matches');
+    await expect(page.locator('#partials-section')).toContainText('No partial anagrams');
   }
 });
 
 test('longer inputs do not show the too-short note', async ({ page }) => {
   await page.goto('/results?letters=tcaorpe');
-  await expect(page.locator('#exact-section h2')).toHaveText('No exact matches');
+  await expect(page.locator('#exact-section h2')).toHaveText('No anagrams');
   await expect(page.locator('#exact-section')).not.toContainText('at least four letters');
 });
 
@@ -58,7 +58,7 @@ test('the results page ends with the same footer note as home', async ({ page })
 
 test('a non-word keeps the plain exact heading', async ({ page }) => {
   await page.goto('/results?letters=cartep');
-  await expect(page.locator('#exact-section h2')).toHaveText('Exact matches');
+  await expect(page.locator('#exact-section h2')).toHaveText('Anagrams');
   expect(await exactWords(page)).toEqual(['carpet']);
 });
 
@@ -85,7 +85,7 @@ test('the partial lists are not a live region; a short status says what arrived'
   await page.click('#partials-button');
   await expect(page.locator('#partials-section .group').first()).toBeVisible();
   await expect(page.locator('#partials-section')).not.toHaveAttribute('aria-live', /.*/);
-  await expect(page.locator('#partials-status')).toHaveText(/^\d+ partial matches in \d+ groups\.$/);
+  await expect(page.locator('#partials-status')).toHaveText(/^\d+ partial anagrams in \d+ groups\.$/);
 });
 
 test('opening partials moves focus to the first group heading instead of dropping it', async ({ page }) => {
@@ -187,7 +187,7 @@ test('shows a loading line, then the result', async ({ page }) => {
   });
   await page.goto('/results?letters=cartep');
   await expect(page.locator('#exact-section')).toContainText('Looking up words');
-  await expect(page.locator('#exact-section h2')).toHaveText('Exact matches');
+  await expect(page.locator('#exact-section h2')).toHaveText('Anagrams');
 });
 
 test.describe('theme', () => {
