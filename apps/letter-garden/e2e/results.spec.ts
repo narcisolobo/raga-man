@@ -82,7 +82,7 @@ test('persists the theme and remains usable on a narrow viewport', async ({ page
   const toggle = page.getByRole('button', { name: 'Dark mode' });
   await expect(toggle).toHaveAttribute('aria-pressed', 'true');
   await toggle.click();
-  await page.getByRole('link', { name: 'Try an example' }).click();
+  await page.getByRole('link', { name: 'C + AINORT' }).click();
   await expect(toggle).toHaveAttribute('aria-pressed', 'false');
   await expect(page.getByRole('heading', { name: /All seven letters/ })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);

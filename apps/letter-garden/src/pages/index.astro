@@ -1,14 +1,12 @@
 ---
 import PuzzleForm from '../components/PuzzleForm.astro';
 import Base from '../layouts/Base.astro';
-import { MIN_WORD_LENGTH } from '../lib/search';
 ---
 <Base title="letter-garden">
   <main class="garden">
-    <h1>Find words</h1>
-    <p>Enter seven different letters, the required one first. Words must have at least {MIN_WORD_LENGTH} letters.</p>
+    <h1>Find every word hiding in your seven letters.</h1>
     <PuzzleForm id="puzzle-form" />
-    <p><a href="/results?letters=acinort&amp;required=c">Try an example</a></p>
+    <p class="example">No letters handy? Try <a href="/results?letters=acinort&amp;required=c">C + AINORT</a></p>
     <noscript>Turn on JavaScript to find words.</noscript>
   </main>
 </Base>

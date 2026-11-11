@@ -21,7 +21,7 @@ const errorId = `${id}-error`;
     <input id={inputId} name="letters" type="text" enterkeyhint="go" autocomplete="off" autocapitalize="characters"
       autocorrect="off" spellcheck="false" aria-describedby={`${hintId} ${noteId} ${errorId}`} />
   </div>
-  <p id={hintId} class="hint">Type the required letter first, then the other six.</p>
+  <p id={hintId} class="hint">Seven different letters. Type the center letter first.</p>
   <p id={noteId} class="input-note" data-letters-note aria-live="polite"></p>
   <p id={errorId} class="form-error" data-letters-error role="alert"></p>
   <button class="solve" type="submit">Solve</button>
