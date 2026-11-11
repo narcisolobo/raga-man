@@ -1,0 +1,40 @@
+---
+import Shell from '@solver-suite/ui/layout';
+import '../styles/home.css';
+import { SOLVERS } from '../solvers';
+
+// Each solver's icon, drawn in this page's tokens so it follows the theme toggle.
+const icons = import.meta.glob<string>('../icons/*.svg', { query: '?raw', import: 'default', eager: true });
+const icon = (app: string): string => {
+  const svg = icons[`../icons/${app}.svg`];
+  if (!svg) throw new Error(`No icon for ${app}; run pnpm icons`);
+  return svg;
+};
+---
+<Shell
+  title="solver suite"
+  description="Small tools for word puzzles."
+  name="solver suite"
+  subtitle="Word-puzzle tools"
+  themeStorageKey="solversuite-theme"
+>
+  <main class="index">
+    <h1>Small tools for the words you can’t quite see.</h1>
+    <ul class="solvers" role="list">
+      {SOLVERS.map((solver) => (
+        <li>
+          <a href={solver.url}>
+            <span class="solver-icon" set:html={icon(solver.app)} />
+            <span class="solver-text">
+              <span class="solver-name">{solver.name}</span>
+              <span class="solver-pitch">{solver.pitch}</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </main>
+  <footer class="foot" slot="footer">
+    <p>Each solver runs in your browser and explains its own word list and limits.</p>
+  </footer>
+</Shell>

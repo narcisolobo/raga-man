@@ -1,0 +1,11 @@
+{
+  "name": "solversuite-home",
+  "compatibility_date": "2026-11-11",
+  "assets": {
+    "directory": "./dist"
+  },
+  // The bare domain: the suite's index page. Each solver has its own subdomain.
+  "routes": [{ "pattern": "solversuite.app", "custom_domain": true }],
+  "workers_dev": false,
+  "preview_urls": false
+}

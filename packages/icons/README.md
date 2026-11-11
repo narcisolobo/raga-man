@@ -12,6 +12,8 @@ For each app in `src/apps.ts`, this writes three files to `apps/<app>/public/`:
 - `favicon.ico`: 16, 32 and 48px, each rendered at its own size
 - `apple-touch-icon.png`: 180px on the ink tile, square (iOS rounds it)
 
+For every solver, it also writes `apps/home/src/icons/<app>.svg`: the same icon with its fills set to the page's custom properties (`--ink`, `--on-ink`, `--pencil-on-ink`) instead of fixed colors, for the suite index to inline, so the tiles follow the site's theme toggle.
+
 The pages already link all three, so a new icon needs no markup changes. Rendering uses Playwright's Chromium, which the e2e tests already install.
 
 ## Adding a solver's icon

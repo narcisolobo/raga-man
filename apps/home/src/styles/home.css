@@ -1,0 +1,37 @@
+/* Masthead: the name is about as long as letter-garden's, so use its grid to clear the toggle. */
+.mast-row {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
+  container-type: inline-size;
+}
+.mast-name { grid-column: 2; font-size: clamp(1.5rem, 10cqi, 3.5rem); }
+.theme-toggle { position: static; grid-column: 3; translate: none; }
+
+.index { padding-block: 1.75rem 0; }
+.index h1 { font-family: var(--display); font-size: 1.625rem; line-height: 1.2; text-wrap: balance; }
+@media (min-width: 40rem) { .index h1 { font-size: 2rem; } }
+
+/* One row per solver, ruled like the word lists; the whole row is the link. */
+.solvers { list-style: none; padding: 0; margin-block-start: 1.75rem; border-top: 2px solid var(--ink); }
+.solvers li { border-bottom: 1px solid var(--ink); }
+.solvers a {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 2.75rem;
+  padding-block: 1rem;
+  color: inherit;
+  text-decoration: none;
+}
+.solvers a:focus-visible { outline: 3px solid var(--pencil); outline-offset: 3px; }
+.solver-icon { flex: none; width: 3.5rem; height: 3.5rem; }
+.solver-icon svg { display: block; width: 100%; height: 100%; }
+.solver-text { display: flex; flex-direction: column; gap: 0.125rem; }
+.solver-name { font-size: 1.375rem; font-weight: 700; line-height: 1.2; }
+.solver-pitch { color: var(--muted); }
+@media (hover: hover) {
+  .solvers a:hover .solver-name { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.15em; }
+}
+@media (forced-colors: active) {
+  .solver-icon { forced-color-adjust: none; }
+}
