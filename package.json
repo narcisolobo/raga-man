@@ -10,6 +10,7 @@
     "dev:raga-man": "pnpm --filter raga-man dev",
     "build": "pnpm -r --if-present build",
     "build:raga-man": "pnpm --filter raga-man build",
+    "preview:raga-man": "pnpm --filter raga-man preview",
     "build:data": "pnpm -r --if-present build:data",
     "preview": "pnpm --filter raga-man preview",
     "test": "pnpm -r --if-present test",
@@ -19,7 +20,8 @@
     "build:letter-garden": "pnpm --filter letter-garden build",
     "preview:letter-garden": "pnpm --filter letter-garden preview",
     "deploy:letter-garden": "pnpm --filter letter-garden deploy:cf",
-    "icons": "pnpm --filter @solver-suite/icons icons"
+    "icons": "pnpm --filter @solver-suite/icons icons",
+    "screenshots": "pnpm --filter @solver-suite/screenshots screenshots"
   },
   "packageManager": "pnpm@12.18.0"
 }
