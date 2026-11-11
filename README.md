@@ -34,3 +34,7 @@ Use `pnpm --filter raga-man <command>` to run an app command directly. There is 
 `packages/word-data` contains the shared trie codec and dictionary preparation. `packages/ui` contains the Astro shell, design tokens, fonts, and theme toggle. Each app owns its search rules, dictionary policy, and input and result views.
 
 Names may be playful but should suggest the tool's job. Never use a game's own name for a tool. Use American English in documentation and interface copy.
+
+## License
+
+The code in this repository is released under the [MIT License](LICENSE). The word list and fonts are covered by their own licenses; see [data/wamerican/COPYRIGHT](data/wamerican/COPYRIGHT) and the credits in each app's README.
