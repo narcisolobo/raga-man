@@ -3,5 +3,8 @@
   "compatibility_date": "2026-11-10",
   "assets": {
     "directory": "./dist"
-  }
+  },
+  "routes": [{ "pattern": "letter-garden.solversuite.app", "custom_domain": true }],
+  // Never published on workers.dev, so it lives only at its own subdomain.
+  "workers_dev": false
 }

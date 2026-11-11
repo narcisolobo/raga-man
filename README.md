@@ -1,17 +1,17 @@
 # Solver suite
 
-Small, static word-puzzle tools built with Astro and TypeScript. Each solver has its own input, search rules, word-data build, tests, and Cloudflare Worker deployment.
+Small, static word-puzzle tools built with Astro and TypeScript. Each solver has its own input, search rules, word-data build, tests, and Cloudflare Worker deployment on its own subdomain.
 
 <table>
   <tr>
     <td align="center" valign="top" width="50%">
       <a href="apps/raga-man/README.md"><img src="apps/raga-man/public/favicon.svg" width="64" height="64" alt=""></a>
-      <p><strong><a href="apps/raga-man/README.md">raga-man</a></strong><br>The anagram solver<br><a href="https://raga-man.narcisolobo.workers.dev/">Live site</a></p>
+      <p><strong><a href="apps/raga-man/README.md">raga-man</a></strong><br>The anagram solver<br><a href="https://raga-man.solversuite.app/">Live site</a></p>
       <img src="apps/raga-man/docs/screenshot-home.png" width="200" alt="raga-man home page with an empty letter field and a Solve button">
     </td>
     <td align="center" valign="top" width="50%">
       <a href="apps/letter-garden/README.md"><img src="apps/letter-garden/public/favicon.svg" width="64" height="64" alt=""></a>
-      <p><strong><a href="apps/letter-garden/README.md">letter-garden</a></strong><br>The seven-letter solver<br>Not yet deployed</p>
+      <p><strong><a href="apps/letter-garden/README.md">letter-garden</a></strong><br>The seven-letter solver<br><a href="https://letter-garden.solversuite.app/">Live site</a></p>
       <img src="apps/letter-garden/docs/screenshot-home.png" width="200" alt="letter-garden home page with seven empty letter squares, the first marked as the center, and a Solve button">
     </td>
   </tr>

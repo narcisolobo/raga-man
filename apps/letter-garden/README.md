@@ -1,5 +1,7 @@
 # letter-garden
 
+[Live site](https://letter-garden.solversuite.app/)
+
 <p>
   <img src="docs/screenshot-home.png" width="280" alt="letter-garden home page with seven empty letter squares, the first marked as the center, and a Solve button">
   <img src="docs/screenshot-results.png" width="280" alt="letter-garden results page for center letter C with AINORT, listing eight pangrams including attraction, carnation and coronation">
@@ -22,7 +24,7 @@ pnpm preview              # port 4322
 pnpm deploy:cf
 ```
 
-Playwright starts its own preview on port 4422. `dev` and `build` generate `public/data/trie.txt` from [the source dictionary](../../data/wamerican/README.md). To check the Worker bundle locally after building, run `pnpm exec wrangler deploy --dry-run`.
+Playwright starts its own preview on port 4422. `dev` and `build` generate `public/data/trie.txt` from [the source dictionary](../../data/wamerican/README.md). Deployment uses this directory's `wrangler.jsonc`: the `letter-garden` Worker, served only at `letter-garden.solversuite.app`. To check the Worker bundle locally after building, run `pnpm exec wrangler deploy --dry-run`.
 
 The screenshots above come from `pnpm screenshots` at the repository root.
 
