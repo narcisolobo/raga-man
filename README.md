@@ -3,7 +3,7 @@
 Small, static word-puzzle tools built with Astro and TypeScript. Each solver has its own input, search rules, word-data build, tests, and Cloudflare Worker deployment.
 
 - **[raga-man](apps/raga-man/README.md)**: the anagram solver. [Live site](https://raga-man.narcisolobo.workers.dev/).
-- **[letter-garden](apps/letter-garden/README.md)**: the seven-letter word finder.
+- **[letter-garden](apps/letter-garden/README.md)**: the seven-letter solver.
 
 ## Development
 
@@ -26,7 +26,7 @@ Use `pnpm --filter raga-man <command>` to run an app command directly. There is 
 ## Repository layout
 
 - `apps/raga-man/`: the existing app and its product records.
-- `apps/letter-garden/`: the seven-letter word finder and its product records.
+- `apps/letter-garden/`: the seven-letter solver and its product records.
 - `data/`: source dictionaries with provenance and license notices. Generated assets belong in each app's `public/data/` and are ignored by Git.
 - `docs/design-system.md`: the shared visual system and app-specific components.
 - `docs/solver-suite-plan.md`: product direction and planned shared modules.
