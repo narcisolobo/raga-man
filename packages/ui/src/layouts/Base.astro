@@ -12,6 +12,9 @@ interface Props {
   themeStorageKey: string;
 }
 const { title, description, name, subtitle, themeStorageKey } = Astro.props;
+// The name links home from every other page; on home itself a self-link would do nothing.
+// The route pattern, not the URL: with build.format 'file' the home URL is /index.html.
+const isHome = Astro.routePattern === '/';
 ---
 <!doctype html>
 <html lang="en">
@@ -42,7 +45,7 @@ const { title, description, name, subtitle, themeStorageKey } = Astro.props;
     <div class="page">
       <header class="mast">
         <div class="mast-row">
-          <p class="mast-name">{name}</p>
+          <p class="mast-name">{isHome ? name : <a href="/">{name}</a>}</p>
           <button id="theme-toggle" data-storage-key={themeStorageKey} class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
               <circle cx="12" cy="12" r="8.5" />
