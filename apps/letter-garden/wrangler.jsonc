@@ -6,5 +6,7 @@
   },
   "routes": [{ "pattern": "letter-garden.solversuite.app", "custom_domain": true }],
   // Never published on workers.dev, so it lives only at its own subdomain.
-  "workers_dev": false
+  "workers_dev": false,
+  // Preview URLs live on workers.dev too; stated here so deploys don't warn about the default.
+  "preview_urls": false
 }
