@@ -1,4 +1,5 @@
 ---
+import EditButton from '@solver-suite/ui/edit-button';
 import Base from '../layouts/Base.astro';
 import '../styles/results.css';
 import { MAX_LETTERS } from '../lib/letters';
@@ -11,12 +12,7 @@ import { MAX_LETTERS } from '../lib/letters';
     <section id="letters-block" class="letters">
       <div class="field-head">
         <p class="label">Your letters</p>
-        <button id="edit-letters" class="icon-button" type="button" aria-label="Edit letters">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 20l1.2-4.4L16.6 4.2a2 2 0 0 1 2.8 0l.4.4a2 2 0 0 1 0 2.8L8.4 18.8z" />
-            <path d="M14.5 6.3l3.2 3.2" />
-          </svg>
-        </button>
+        <EditButton id="edit-letters" label="Edit letters" />
       </div>
       <div id="letters-display" class="squares" aria-hidden="true"></div>
     </section>

@@ -4,6 +4,7 @@
   "type": "module",
   "exports": {
     "./layout": "./src/layouts/Base.astro",
+    "./edit-button": "./src/components/EditButton.astro",
     "./styles": "./src/styles/global.css",
     "./squares.css": "./src/styles/squares.css",
     "./squares": "./src/scripts/squares.ts"
