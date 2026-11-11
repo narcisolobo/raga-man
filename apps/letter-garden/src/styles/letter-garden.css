@@ -29,5 +29,7 @@
 #results-status { margin-block-start: 1.25rem; }
 #results-status:empty { margin: 0; }
 #results-content > section { margin-block-start: 2rem; }
+/* The center tag hangs 1.25rem below the squares; clear it by raga-man's 2rem. */
+#results-content > section:first-child { margin-block-start: 3.25rem; }
 #results-content .group { margin-block-start: 2rem; }
 #results-content .group .btn-secondary { height: 3rem; margin-block-start: 1rem; }

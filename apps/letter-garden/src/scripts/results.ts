@@ -64,12 +64,16 @@ export function mountResults(): void {
     loading = true;
     retry.disabled = true;
     content.replaceChildren();
+    status.classList.remove('sr-only');
     status.textContent = 'Finding words…';
 
     try {
       const root = await loadTrie();
       const results = findWords(root, puzzle);
       renderResults(content, results);
+      // Each section shows its own count, and a total from a general dictionary
+      // rarely matches the game's, so the total is announced but not shown.
+      status.classList.add('sr-only');
       status.textContent = `${results.total} ${results.total === 1 ? 'word' : 'words'} found.`;
       const recoverFocus = fromRetry && (document.activeElement === retry || document.activeElement === document.body);
       retry.hidden = true;

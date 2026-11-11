@@ -52,12 +52,17 @@ test('retries a failed fetch once and focuses the results', async ({ page }) => 
     return requests === 1 ? route.fulfill({ status: 503 }) : route.continue();
   });
   await page.goto(puzzle);
-  await expect(page.getByRole('status')).toHaveText('The word list could not load.');
+  const status = page.getByRole('status');
+  await expect(status).toHaveText('The word list could not load.');
+  await expect(status).not.toHaveClass(/sr-only/);
   await page.getByRole('button', { name: 'Retry' }).focus();
   await page.keyboard.press('Enter');
   const heading = page.getByRole('heading', { name: 'Pangrams' });
   await expect(heading).toHaveCount(1);
   await expect(heading).toBeFocused();
+  // The total is announced to screen readers but not shown.
+  await expect(status).toHaveText(/^\d+ words found\.$/);
+  await expect(status).toHaveClass(/sr-only/);
   expect(requests).toBe(2);
 });
 
