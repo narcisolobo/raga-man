@@ -1,6 +1,6 @@
 # raga-man
 
-[Live site](https://raga-man.narcisolobo.workers.dev/)
+[Live site](https://raga-man.solversuite.app/)
 
 <p>
   <img src="docs/screenshot-home.png" width="280" alt="raga-man home page with an empty letter field and a Solve button">
@@ -24,7 +24,7 @@ pnpm preview
 pnpm deploy:cf
 ```
 
-Playwright starts its own preview on port 4421. `dev` and `build` generate `public/data/exact.json` and `public/data/trie.txt` from [the source dictionary](../../data/wamerican/README.md). Deployment uses this directory's `wrangler.jsonc`, preserving the `raga-man` Worker name and existing routes.
+Playwright starts its own preview on port 4421. `dev` and `build` generate `public/data/exact.json` and `public/data/trie.txt` from [the source dictionary](../../data/wamerican/README.md). Deployment uses this directory's `wrangler.jsonc`: the `raga-man` Worker, served at `raga-man.solversuite.app` and, for older links, `raga-man.narcisolobo.workers.dev`.
 
 The screenshots above come from `pnpm screenshots` at the repository root.
 

@@ -43,15 +43,15 @@ Ordered by how I would build them. "Reuse" means how much of raga-man's engine c
 - `packages/ui` provides the Astro shell, design tokens, typography, and theme toggle.
 - Each app has its own search, data loader, input controls, and result presentation.
 
-## Structure and hosting (open questions)
+## Structure and hosting
 
 **Repository structure.** The pnpm workspace contains both Astro apps. Each owns its tests, generated assets, and Worker configuration. Source dictionaries and license notices live in `data/`. Shared trie storage and word preparation live in `packages/word-data`. The layout, tokens, fonts, and theme toggle live in `packages/ui`.
 
-**Where they live.** Register a new domain through Cloudflare, so its DNS zone is on Cloudflare from the start. Worker custom domains need an active Cloudflare zone, which is why `narcisolobo.com` (DNS at GoDaddy, with many records) is staying as it is. Each solver would be its own Worker on its own subdomain, via a `custom_domain: true` route in its `wrangler.jsonc`, with the bare domain for a small index page linking to all of them.
+**Where they live.** The suite's domain is `solversuite.app`, registered through Cloudflare so its DNS zone is on Cloudflare from the start. Worker custom domains need an active Cloudflare zone, which is why `narcisolobo.com` (DNS at GoDaddy, with many records) was not used. Each solver is its own Worker on its own subdomain (`raga-man.solversuite.app`, `letter-garden.solversuite.app`) via a `custom_domain: true` route in its `wrangler.jsonc`. The bare domain is reserved for a small index page linking to all of them. `.app` requires HTTPS, which Cloudflare provides.
 
 **If DNS has to stay at GoDaddy.** Cloudflare Pages supports a subdomain CNAME with outside DNS, but it is the older path and would mean changing the deploy target. Not the plan; recorded so the option is not lost.
 
-**raga-man's own address.** It stays at its `workers.dev` URL until the new domain exists, then gets a route. The `workers.dev` address can be switched off later with `workers_dev: false`.
+**raga-man's old address.** raga-man was first published at `raga-man.narcisolobo.workers.dev`. Its config keeps `workers_dev: true` so links to that address keep working; switch it to `false` once they no longer matter. Newer solvers set `workers_dev: false` from the start.
 
 ## Word lists
 
@@ -62,7 +62,7 @@ Ordered by how I would build them. "Reuse" means how much of raga-man's engine c
 
 ## Rough sequencing
 
-1. Workspace preparation complete: raga-man lives in `apps/raga-man/`. Decide on the domain separately.
+1. Workspace preparation complete: raga-man lives in `apps/raga-man/`. The domain is `solversuite.app`.
 2. Shared word-data and UI modules and the letter-garden app are implemented. See `apps/letter-garden/README.md`.
 3. Five-letter helper.
 4. Pick the rest by what actually gets used. Add the index page at the bare domain once there are two or three to link to.
