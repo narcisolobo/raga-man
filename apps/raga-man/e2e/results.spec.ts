@@ -126,10 +126,13 @@ test('there is always exactly one h1, including while editing', async ({ page })
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Results for cartep');
 });
 
-test('the no-partials note is separated from the exact section above it', async ({ page }) => {
+test('the no-partials note is separated from the anagrams section above it', async ({ page }) => {
   await page.goto('/results?letters=ab');
-  const exact = await page.locator('#exact-section').boundingBox();
+  // Measure only once everything has loaded: while loading, the anagrams section
+  // reserves extra height, which would make the gap look too small.
+  await expect(page.locator('#exact-section')).not.toHaveClass(/is-loading/);
   const note = await page.locator('#partials-section .empty-note').boundingBox();
+  const exact = await page.locator('#exact-section').boundingBox();
   expect(note!.y - (exact!.y + exact!.height)).toBeGreaterThanOrEqual(24);
 });
 
