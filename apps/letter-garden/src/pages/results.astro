@@ -1,0 +1,30 @@
+---
+import PuzzleForm from '../components/PuzzleForm.astro';
+import Base from '../layouts/Base.astro';
+---
+<Base title="Results | letter-garden">
+  <main class="garden">
+    <h1 id="results-heading">Results</h1>
+    <div id="puzzle-summary" hidden>
+      <p id="summary-letters" class="summary-letters"></p>
+      <p id="summary-required"></p>
+      <button class="btn-secondary" id="edit-puzzle" type="button">Edit letters</button>
+    </div>
+    <div id="edit-puzzle-panel" hidden>
+      <PuzzleForm id="edit-form" cancel />
+    </div>
+    <div id="invalid-puzzle" hidden>
+      <PuzzleForm id="repair-form" />
+    </div>
+    <p id="results-status" role="status"></p>
+    <button class="btn-secondary" id="retry-load" type="button" hidden>Retry</button>
+    <div id="results-content"></div>
+    <p><a href="/">New search</a></p>
+    <noscript>Turn on JavaScript to find words.</noscript>
+  </main>
+</Base>
+<script>
+  import { mountResults } from '../scripts/results';
+
+  mountResults();
+</script>

@@ -1,17 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { buildTrie, decodeTrie, encodeTrie, searchPartials } from '../src/lib/trie';
+import { buildTrie, decodeTrie, encodeTrie } from '@solver-suite/word-data/trie';
+import { searchPartials } from '../src/lib/trie';
 
 const fixture = ['care', 'cart', 'race', 'acre', 'cape', 'pace', 'carpet', 'crate', 'trace', 'react', 'acca'];
-
-describe('encodeTrie / decodeTrie', () => {
-  it('encodes in the compact grammar', () => {
-    expect(encodeTrie(buildTrie(['care', 'cart']))).toBe('c(a(r(e$t$)))');
-  });
-  it('round-trips the fixture', () => {
-    const encoded = encodeTrie(buildTrie(fixture));
-    expect(encodeTrie(decodeTrie(encoded))).toBe(encoded);
-  });
-});
 
 describe('searchPartials', () => {
   const trie = decodeTrie(encodeTrie(buildTrie(fixture)));

@@ -1,0 +1,26 @@
+---
+interface Props {
+  id: string;
+  cancel?: boolean;
+}
+const { id, cancel = false } = Astro.props;
+const inputId = `${id}-letters`;
+const noteId = `${id}-note`;
+const lettersErrorId = `${id}-letters-error`;
+const requiredErrorId = `${id}-required-error`;
+---
+<form id={id} class="puzzle-form" method="get" action="/results" novalidate>
+  <label for={inputId}>Puzzle letters</label>
+  <input id={inputId} name="letters" type="text" autocomplete="off" autocapitalize="characters"
+    spellcheck="false" aria-describedby={`${noteId} ${lettersErrorId}`} />
+  <p id={noteId} class="input-note" data-letters-note aria-live="polite"></p>
+  <p id={lettersErrorId} class="form-error" data-letters-error role="alert"></p>
+  <fieldset data-required-field tabindex="-1" aria-describedby={requiredErrorId}>
+    <legend>Required center letter</legend>
+    <p data-selector-hint class="input-note">Enter seven different letters to choose one.</p>
+    <div class="required-options" data-required-letters></div>
+  </fieldset>
+  <p id={requiredErrorId} class="form-error" data-required-error role="alert"></p>
+  <button class="solve" type="submit">Solve</button>
+  {cancel && <button class="btn-secondary" type="button" data-cancel>Cancel</button>}
+</form>

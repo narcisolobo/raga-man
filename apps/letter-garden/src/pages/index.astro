@@ -1,0 +1,19 @@
+---
+import PuzzleForm from '../components/PuzzleForm.astro';
+import Base from '../layouts/Base.astro';
+import { MIN_WORD_LENGTH } from '../lib/search';
+---
+<Base title="letter-garden">
+  <main class="garden">
+    <h1>Find words</h1>
+    <p>Enter seven different letters and pick the one every word must include. Words must have at least {MIN_WORD_LENGTH} letters.</p>
+    <PuzzleForm id="puzzle-form" />
+    <p><a href="/results?letters=acinort&amp;required=c">Try an example</a></p>
+    <noscript>Turn on JavaScript to find words.</noscript>
+  </main>
+</Base>
+<script>
+  import { mountPuzzleForm } from '../scripts/puzzle-form';
+
+  mountPuzzleForm(document.querySelector<HTMLFormElement>('#puzzle-form')!);
+</script>

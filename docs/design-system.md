@@ -139,11 +139,11 @@ components:
     padding: "0.25rem 0"
 ---
 
-# Design System: raga-man
+# Solver suite design system
 
-Source paths below are relative to `apps/raga-man/`. This document records the existing raga-man design; shared tokens and layout code will be extracted when letter-garden is implemented.
+Both apps use the Astro shell in `packages/ui/src/layouts/Base.astro` and tokens, typography, buttons, and layout rules in `packages/ui/src/styles/global.css`. The shell takes the app's name, subtitle, description, and theme storage key. `packages/ui/src/scripts/theme.ts` wires the toggle.
 
-Scope: the home page `/` and the results page `/results` share one system. Tokens, base, masthead, theme toggle, letter squares, field, Solve and the secondary button live in `src/styles/global.css`, loaded through the `src/layouts/Base.astro` layout (head, pre-paint theme script, masthead). Results-only rules (lists, groups, notes, the back link) live in `src/styles/results.css` and add no new tokens; they inherit every custom property from the global sheet.
+The raga-man wrapper loads its tile input rules from `apps/raga-man/src/styles/global.css`. Its result lists and notes use `apps/raga-man/src/styles/results.css`. letter-garden uses `apps/letter-garden/src/styles/letter-garden.css` for its native entry and results.
 
 ## Overview
 
@@ -229,6 +229,10 @@ A grid of squares serves both pages: home `#letters` and results edit mode `#edi
 - **Entry motion:** a newly typed letter rises 6px and fades in over 160ms with `cubic-bezier(0.16, 1, 0.3, 1)`.
 - **No-JS fallback:** squares are hidden and the input becomes a plain 4rem tall, 2px-bordered, Cell White field with 1.5rem text.
 - **Header row:** uppercase label at left, tabular counter ("0 / 48") at right, muted.
+
+### Required-letter selector
+
+letter-garden uses a labeled text input and a native radio group. Seven different letters reveal the options. Each label is at least 44 by 44 CSS pixels. A checked option has an inset border and underline, and keyboard focus has a separate outline. Reordering the same set preserves the selection. If the set becomes invalid or the selected letter disappears, the player chooses again.
 
 ### Read-only letter squares
 On the results page the same squares, with no input, caret or active state, show the letters being solved under a "Your letters" label. They are decorative to assistive tech (`aria-hidden`); the page `h1` carries the letters in text.

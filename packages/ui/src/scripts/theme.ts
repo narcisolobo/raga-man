@@ -1,6 +1,5 @@
 // Wires the theme toggle. The saved choice is applied before first paint by the
 // inline script in the page head; this only handles the button.
-const KEY = 'raga-theme';
 const root = document.documentElement;
 const button = document.getElementById('theme-toggle') as HTMLButtonElement | null;
 const system = window.matchMedia('(prefers-color-scheme: dark)');
@@ -19,7 +18,8 @@ if (button) {
     const next = isDark() ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
     try {
-      localStorage.setItem(KEY, next);
+      const key = button.dataset.storageKey;
+      if (key) localStorage.setItem(key, next);
     } catch {
       // Storage can be blocked; the choice then lasts for this page view only.
     }

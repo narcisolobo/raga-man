@@ -1,0 +1,68 @@
+.mast-row {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
+  container-type: inline-size;
+}
+.mast-name { grid-column: 2; font-size: clamp(1.5rem, 10cqi, 3.5rem); }
+.theme-toggle { position: static; grid-column: 3; translate: none; }
+
+.garden { padding-block: 1.75rem 0; }
+.garden h1, .garden h2, .garden h3 { font-family: var(--display); }
+.garden h1 { font-size: clamp(2.25rem, 9vw, 3.75rem); line-height: 1.1; }
+.garden h2 { font-size: 1.65rem; }
+.garden h3 { font-size: 1.25rem; }
+.garden p { margin-block-start: 0.625rem; }
+.garden a, .foot a { color: inherit; text-underline-offset: 0.2em; }
+.garden a:focus-visible, .foot a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+.puzzle-form { margin-block: 1.5rem; }
+.puzzle-form input[type='text'] {
+  display: block;
+  width: 100%;
+  margin-block-start: 0.375rem;
+  padding: 0.65rem 0.75rem;
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  background: var(--cell);
+  color: var(--ink);
+  font: 700 1.5rem var(--sans);
+  text-transform: uppercase;
+}
+.puzzle-form input[type='text']:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+.puzzle-form fieldset { min-width: 0; margin-block-start: 1rem; padding: 0; border: 0; }
+.puzzle-form legend { font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.garden .input-note { color: var(--muted); font-size: 0.875rem; }
+.garden .input-note:empty, .garden .form-error:empty { margin: 0; }
+.form-error { font-weight: 700; }
+.required-options { display: flex; flex-wrap: wrap; gap: 0.375rem; margin-block-start: 0.5rem; }
+.required-options label { position: relative; display: flex; min-height: 44px; min-width: 44px; cursor: pointer; }
+.required-options input { position: absolute; opacity: 0; }
+.required-options span {
+  display: grid;
+  flex: 1;
+  place-items: center;
+  border: 1px solid var(--ink);
+  background: var(--cell);
+  font: 700 1.25rem var(--display);
+}
+.required-options input:checked + span { background: var(--mark); box-shadow: inset 0 0 0 2px var(--ink); text-decoration: underline; }
+.required-options input:focus-visible + span { outline: 2px solid currentColor; outline-offset: 2px; }
+.summary-letters { font: 700 clamp(1.25rem, 7vw, 2rem) var(--display); }
+.garden .btn-secondary { margin-block-start: 0.75rem; min-height: 44px; }
+#results-status { margin-block-start: 1.25rem; }
+#results-status:empty { margin: 0; }
+#results-content section { margin-block-start: 1rem; }
+#results-content > section { margin-block-start: 1.5rem; border-block-start: 1px solid var(--ink); padding-block-start: 0.75rem; }
+.word-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(8rem, 100%), 1fr));
+  gap: 0.25rem 1rem;
+  padding: 0;
+  margin-block-start: 0.5rem;
+  list-style: none;
+  overflow-wrap: anywhere;
+}
+.word-list li:focus { outline: 2px solid currentColor; outline-offset: 2px; }
