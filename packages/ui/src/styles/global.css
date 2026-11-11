@@ -152,7 +152,10 @@ label,
   outline-offset: 3px;
 }
 
-.foot { margin-top: 2.5rem; padding-top: 0.75rem; border-top: 1px solid var(--ink); font-size: 0.8125rem; color: var(--muted); text-wrap: balance; }
+.foot { margin-top: 2.5rem; padding-top: 0.75rem; border-top: 1px solid var(--ink); font-size: 0.8125rem; color: var(--muted); text-wrap: pretty; }
+.foot p + p { margin-top: 0.375rem; }
+.foot a { color: inherit; text-underline-offset: 0.2em; }
+.foot a:focus-visible { outline: 3px solid var(--pencil); outline-offset: 3px; }
 
 @media (min-width: 40rem) {
   .page { padding-top: 3rem; }
