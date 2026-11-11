@@ -10,7 +10,7 @@ test('solves a puzzle from the form and preserves the results on refresh', async
   expect(dataRequests).toEqual([]);
   await page.getByRole('button', { name: 'Solve' }).click();
   await expect(page).toHaveURL('/results?letters=acinort&required=c');
-  const allSeven = page.getByRole('region', { name: /All seven letters/ });
+  const allSeven = page.getByRole('region', { name: 'Pangrams' });
   await expect(allSeven.getByText('coronation', { exact: true })).toBeVisible();
   await expect(allSeven.getByText('cartoon', { exact: true })).toHaveCount(0);
   await expect(page.getByRole('region', { name: /7 letters/ }).getByText('cartoon', { exact: true })).toBeVisible();

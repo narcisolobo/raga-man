@@ -7,7 +7,7 @@ const wordItems = (words: string[]): HTMLLIElement[] =>
     return li;
   });
 
-const countLabel = (n: number): string => `${n} ${n === 1 ? 'word' : 'words'}`;
+export const countLabel = (n: number): string => `${n} ${n === 1 ? 'word' : 'words'}`;
 
 /** One short sentence for a status region, so the lists themselves never need to be announced. */
 export function summarizePartials(groups: PartialGroup[]): string {

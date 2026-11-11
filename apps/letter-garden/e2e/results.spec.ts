@@ -55,7 +55,7 @@ test('retries a failed fetch once and focuses the results', async ({ page }) => 
   await expect(page.getByRole('status')).toHaveText('The word list could not load.');
   await page.getByRole('button', { name: 'Retry' }).focus();
   await page.keyboard.press('Enter');
-  const heading = page.getByRole('heading', { name: /All seven letters/ });
+  const heading = page.getByRole('heading', { name: 'Pangrams' });
   await expect(heading).toHaveCount(1);
   await expect(heading).toBeFocused();
   expect(requests).toBe(2);
@@ -65,8 +65,8 @@ test('paginates a fixture group and handles empty results', async ({ page }) => 
   const words = Array.from({ length: 64 }, (_, index) => 'c' + index.toString(2).padStart(6, '0').replaceAll('0', 'a').replaceAll('1', 'i'));
   await page.route('**/data/trie.txt', (route) => route.fulfill({ body: encodeTrie(buildTrie(words)) }));
   await page.goto(puzzle);
-  await expect(page.getByText('No words use all seven letters.')).toBeVisible();
-  const group = page.getByRole('region', { name: '7 letters (64)' });
+  await expect(page.getByText('No pangrams.')).toBeVisible();
+  const group = page.getByRole('region', { name: '7 letters' });
   await expect(group.getByRole('listitem')).toHaveCount(50);
   await group.getByRole('button', { name: 'Show more' }).click();
   await expect(group.getByRole('listitem')).toHaveCount(64);
@@ -84,7 +84,7 @@ test('persists the theme and remains usable on a narrow viewport', async ({ page
   await toggle.click();
   await page.getByRole('link', { name: 'C + AINORT' }).click();
   await expect(toggle).toHaveAttribute('aria-pressed', 'false');
-  await expect(page.getByRole('heading', { name: /All seven letters/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Pangrams' })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
 });
 
@@ -113,6 +113,6 @@ test('keeps labels and controls usable at twice the normal scale', async ({ page
   await page.getByRole('button', { name: 'Solve' }).click();
   await expect(page).toHaveURL(puzzle);
   await page.evaluate(() => { document.documentElement.style.zoom = '2'; });
-  await expect(page.getByRole('heading', { name: /All seven letters/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Pangrams' })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(640);
 });

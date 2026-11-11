@@ -7,6 +7,7 @@
     "./edit-button": "./src/components/EditButton.astro",
     "./styles": "./src/styles/global.css",
     "./squares.css": "./src/styles/squares.css",
+    "./results.css": "./src/styles/results.css",
     "./squares": "./src/scripts/squares.ts"
   },
   "dependencies": {

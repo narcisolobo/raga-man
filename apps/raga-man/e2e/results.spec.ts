@@ -9,6 +9,7 @@ test('the input itself is hidden from the anagrams', async ({ page }) => {
   const words = await exactWords(page);
   expect(words).toContain('silent');
   expect(words).not.toContain('listen');
+  await expect(page.locator('#exact-section .group-count')).toHaveText(`${words.length} words`);
   await expect(page.locator('#partials-button')).toBeVisible();
 });
 

@@ -70,7 +70,7 @@ export function mountResults(): void {
       const root = await loadTrie();
       const results = findWords(root, puzzle);
       renderResults(content, results);
-      status.textContent = `${results.total} ${results.total === 1 ? 'word' : 'words'} found. ${results.allSeven.length} use all seven letters.`;
+      status.textContent = `${results.total} ${results.total === 1 ? 'word' : 'words'} found.`;
       const recoverFocus = fromRetry && (document.activeElement === retry || document.activeElement === document.body);
       retry.hidden = true;
       if (recoverFocus) {

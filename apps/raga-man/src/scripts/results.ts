@@ -4,7 +4,7 @@ import { presentExact } from '../lib/exact-view';
 import { normalizeLetters } from '../lib/letters';
 import { searchPartials } from '../lib/trie';
 import { mountLetterField, renderStaticSquares } from './letter-field';
-import { renderPartialGroups, summarizePartials } from './partials';
+import { countLabel, renderPartialGroups, summarizePartials } from './partials';
 
 const LOAD_ERROR = "Couldn't load the word list. Check your connection and try again.";
 
@@ -81,9 +81,20 @@ if (!letters) {
     exactSection.classList.remove('is-loading');
     openPartials = view.openPartials;
     const heading = document.createElement('h2');
-    heading.className = 'section-title';
     heading.textContent = view.heading;
-    exactSection.replaceChildren(heading);
+    if (view.words.length > 0) {
+      // Same head as the partial groups and letter-garden's pangrams: label left, count right.
+      const head = document.createElement('div');
+      head.className = 'group-head';
+      const count = document.createElement('span');
+      count.className = 'group-count';
+      count.textContent = countLabel(view.words.length);
+      head.append(heading, count);
+      exactSection.replaceChildren(head);
+    } else {
+      heading.className = 'section-title';
+      exactSection.replaceChildren(heading);
+    }
     if (view.note) {
       const note = document.createElement('p');
       note.className = 'empty-note';
@@ -92,7 +103,7 @@ if (!letters) {
     }
     if (view.words.length > 0) {
       const list = document.createElement('ul');
-      list.className = 'exact-list';
+      list.className = 'word-rows';
       for (const word of view.words) {
         const item = document.createElement('li');
         item.textContent = word;
