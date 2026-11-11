@@ -10,5 +10,8 @@ export default defineConfig({
     reuseExistingServer: false,
   },
   use: { baseURL: 'http://localhost:4421' },
-  projects: [{ name: 'phone', use: { ...devices['Pixel 7'] } }],
+  projects: [
+    { name: 'phone', use: { ...devices['Pixel 7'] } },
+    { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
+  ],
 });
