@@ -1,11 +1,11 @@
-/* Field: a row of squares drawn over a real input. */
+/* Squares: a row of cells drawn over a real input. Set --squares-per-row to change the grid width. */
 .field-head { display: flex; justify-content: space-between; align-items: baseline; margin-top: 1.75rem; }
 .count { font-size: 0.8125rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 
 .field { position: relative; margin-top: 0.5rem; }
 .squares {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(var(--squares-per-row, 8), 1fr);
   padding: 0 2px 2px 0;
 }
 .sq {

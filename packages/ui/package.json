@@ -4,7 +4,9 @@
   "type": "module",
   "exports": {
     "./layout": "./src/layouts/Base.astro",
-    "./styles": "./src/styles/global.css"
+    "./styles": "./src/styles/global.css",
+    "./squares.css": "./src/styles/squares.css",
+    "./squares": "./src/scripts/squares.ts"
   },
   "dependencies": {
     "@fontsource-variable/libre-franklin": "^5.3.0",
