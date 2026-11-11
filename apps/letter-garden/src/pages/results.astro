@@ -1,15 +1,19 @@
 ---
 import PuzzleForm from '../components/PuzzleForm.astro';
+import EditButton from '@solver-suite/ui/edit-button';
 import Base from '../layouts/Base.astro';
 ---
 <Base title="Results | letter-garden">
   <main class="garden">
     <h1 id="results-heading" class="sr-only">Results</h1>
+    <p class="back"><a href="/">New search</a></p>
     <div id="puzzle-summary" hidden>
-      <div class="field-head"><p class="label">Your letters</p></div>
+      <div class="field-head">
+        <p class="label">Your letters</p>
+        <EditButton id="edit-puzzle" label="Edit letters" />
+      </div>
       <div id="summary-squares" class="squares has-center" aria-hidden="true"></div>
       <p id="summary-required" class="sr-only"></p>
-      <button class="btn-secondary" id="edit-puzzle" type="button">Edit letters</button>
     </div>
     <div id="edit-puzzle-panel" hidden>
       <PuzzleForm id="edit-form" cancel />
@@ -20,7 +24,6 @@ import Base from '../layouts/Base.astro';
     <p id="results-status" role="status"></p>
     <button class="btn-secondary" id="retry-load" type="button" hidden>Retry</button>
     <div id="results-content"></div>
-    <p><a href="/">New search</a></p>
     <noscript>Turn on JavaScript to find words.</noscript>
   </main>
 </Base>

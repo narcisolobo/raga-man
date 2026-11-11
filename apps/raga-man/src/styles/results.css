@@ -1,21 +1,5 @@
 /* Results page. Inherits every token from global.css; adds only what lists need. */
 
-.back { margin-top: 0.75rem; }
-.back a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.75rem;
-  color: var(--pencil);
-  font-weight: 700;
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
-}
-.back a:focus-visible {
-  outline: 3px solid var(--pencil);
-  outline-offset: 3px;
-}
-
 /* Your letters: label row with the pencil, then read-only squares. */
 .letters { margin-top: 0.5rem; }
 .letters .field-head { margin-top: 0; align-items: center; }

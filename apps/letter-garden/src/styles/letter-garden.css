@@ -20,8 +20,10 @@
 
 .puzzle-form { margin-block: 1.5rem; --squares-per-row: 7; }
 .puzzle-form .field-head { margin-top: 0; }
-#puzzle-summary { --squares-per-row: 7; margin-block-start: 1.25rem; }
-#puzzle-summary .field-head { margin-top: 0; }
+#puzzle-summary { --squares-per-row: 7; margin-block-start: 0.5rem; }
+#puzzle-summary .field-head { margin-top: 0; align-items: center; }
+#puzzle-summary .icon-button { margin-right: -0.5rem; }
+#puzzle-summary .squares { margin-top: 0.25rem; }
 .garden .input-note { color: var(--muted); font-size: 0.875rem; }
 .garden .input-note:empty, .garden .form-error:empty { margin: 0; }
 .form-error { color: var(--error); font-weight: 700; }
