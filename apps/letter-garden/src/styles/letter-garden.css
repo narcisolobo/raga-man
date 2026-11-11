@@ -16,8 +16,7 @@
 .garden a { color: var(--pencil); font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
 .garden .example { margin-block-start: 1.25rem; text-align: center; font-size: 0.9375rem; color: var(--muted); }
 .garden .example a { display: inline-block; padding: 0.5rem 0.25rem; letter-spacing: 0.08em; }
-.foot a { color: inherit; text-underline-offset: 0.2em; }
-.garden a:focus-visible, .foot a:focus-visible { outline: 3px solid var(--pencil); outline-offset: 3px; }
+.garden a:focus-visible { outline: 3px solid var(--pencil); outline-offset: 3px; }
 
 .puzzle-form { margin-block: 1.5rem; --squares-per-row: 7; }
 .puzzle-form .field-head { margin-top: 0; }
