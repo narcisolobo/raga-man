@@ -10,5 +10,11 @@ const { title, description = 'Find every word hiding in your leftover letters.' 
 ---
 <Shell {title} {description} name="raga-man" subtitle="The anagram solver" themeStorageKey="raga-theme">
   <slot />
-  <slot name="footer" slot="footer" />
+  <footer class="foot" slot="footer">
+    <p>
+      Words of four letters or more. No names, no possessives. Your game may accept words not listed here, or reject
+      some that are.
+    </p>
+    <p>Word list: <a href="https://packages.debian.org/stable/wamerican">Debian wamerican (SCOWL)</a>.</p>
+  </footer>
 </Shell>
