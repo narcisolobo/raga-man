@@ -47,10 +47,10 @@ Success: on a phone, a player types their leftover letters and sees the answer w
 - Shows the submitted letters as text (normalized form), with a **pencil icon button**. Clicking it replaces the text with an input (prefilled) and a submit control; submitting reloads the page with the new letters (full page load is fine). The input is hidden until the pencil is clicked.
 - A link or control back to a fresh search.
 - **Exact matches** section: every dictionary word that uses all the letters exactly once each. Shown first.
-- A **"Show partial matches"** button. Clicking it appends the partial matches to the page in the DOM (no reload).
+- A **"Show partial anagrams"** button. Clicking it appends the partial matches to the page in the DOM (no reload).
 - **Partial matches**: words buildable from a subset of the letters, each letter used at most as many times as it appears in the input, with length >= 4 and shorter than the input length. Grouped by length, **longest first**, each group labeled with its length. Words within a group sorted alphabetically.
-- **No exact matches:** show a "No exact matches" message and **open the partial matches automatically** (no button press needed).
-- Zero partial matches: show a plain "No partial matches" message.
+- **No exact matches:** show a "No anagrams" heading and **open the partial matches automatically** (no button press needed).
+- Zero partial matches: show a plain "No partial anagrams" message.
 - Realistic inputs are 4-12 letters, but large inputs (up to the 48 cap) can return thousands of partials. Each length group renders its first 50 words with a "Show more" control that reveals the rest. *(Author's call; the 50 is adjustable.)*
 - The pencil is a real `<button>` with an accessible label (e.g. "Edit letters"). The edit input sits in a normal `<form>`. *(Author's call.)*
 - Partials are computed in the browser on demand, not on page load, when the button is pressed (or automatically per the rule above).
@@ -97,7 +97,7 @@ Each milestone ends in something checkable. *(Author's proposal; the implementat
 1. **Word data pipeline.** Astro + TypeScript project scaffolded. A build step reads `wamerican`, filters it (lowercase a-z, 4+ letters), and emits the Map data and the trie data. The toolchain is confirmed working: TypeScript 6 and Node 26 (see Stack). Done when unit tests confirm proper nouns and possessives are gone and that `carpet`-style lookups return the right words.
 2. **Search core.** Pure TypeScript functions: input normalization, exact lookup, and trie subset search grouped by length, longest first. Done when unit tests pass, including repeated letters and the length bounds.
 3. **Home and results pages (exact matches).** Home form, `/results?letters=...`, uppercase display, the pencil edit, and the exact-matches section. Done when the flow works in a browser on a phone-sized viewport.
-4. **Partial matches.** The "Show partial matches" button, auto-open when there are no exact matches, length groups, and "Show more". The trie data loads only when needed. Done when the full flow works and the home page downloads no word data.
+4. **Partial matches.** The "Show partial anagrams" button, auto-open when there are no exact matches, length groups, and "Show more". The trie data loads only when needed. Done when the full flow works and the home page downloads no word data.
 5. **Deploy.** Static build deployed to Cloudflare Workers static assets. Done when the live URL works on a real phone.
 
 Design polish (the `impeccable` pass) comes after milestone 5 and is a separate project.

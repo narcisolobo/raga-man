@@ -12,8 +12,8 @@ const countLabel = (n: number): string => `${n} ${n === 1 ? 'word' : 'words'}`;
 /** One short sentence for a status region, so the lists themselves never need to be announced. */
 export function summarizePartials(groups: PartialGroup[]): string {
   const total = groups.reduce((sum, group) => sum + group.words.length, 0);
-  if (total === 0) return 'No partial matches.';
-  const matches = `${total} partial ${total === 1 ? 'match' : 'matches'}`;
+  if (total === 0) return 'No partial anagrams.';
+  const matches = `${total} partial ${total === 1 ? 'anagram' : 'anagrams'}`;
   return `${matches} in ${groups.length} ${groups.length === 1 ? 'group' : 'groups'}.`;
 }
 
@@ -26,7 +26,7 @@ export function renderPartialGroups(container: HTMLElement, groups: PartialGroup
   if (groups.length === 0) {
     const p = document.createElement('p');
     p.className = 'empty-note';
-    p.textContent = 'No partial matches';
+    p.textContent = 'No partial anagrams';
     p.tabIndex = -1;
     container.append(p);
     return p;

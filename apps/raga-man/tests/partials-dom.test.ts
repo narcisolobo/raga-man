@@ -48,7 +48,7 @@ describe('renderPartialGroups', () => {
     ]);
     expect(target?.textContent).toBe('5 letters');
     expect(target?.tabIndex).toBe(-1);
-    expect(renderPartialGroups(container, [])?.textContent).toBe('No partial matches');
+    expect(renderPartialGroups(container, [])?.textContent).toBe('No partial anagrams');
   });
 
   it('hands focus to the first newly revealed word when "Show more" removes itself', () => {
@@ -67,9 +67,9 @@ describe('renderPartialGroups', () => {
     expect(container.querySelectorAll('h3')).toHaveLength(1);
   });
 
-  it('says so when there are no partial matches', () => {
+  it('says so when there are no partial anagrams', () => {
     renderPartialGroups(container, []);
-    expect(container.textContent).toContain('No partial matches');
+    expect(container.textContent).toContain('No partial anagrams');
   });
 });
 
@@ -80,11 +80,11 @@ describe('summarizePartials', () => {
         { length: 5, words: ['bbbbb', 'ccccc'] },
         { length: 4, words: ['dddd'] },
       ]),
-    ).toBe('3 partial matches in 2 groups.');
+    ).toBe('3 partial anagrams in 2 groups.');
   });
 
   it('handles the singular and the empty case', () => {
-    expect(summarizePartials([{ length: 4, words: ['cccc'] }])).toBe('1 partial match in 1 group.');
-    expect(summarizePartials([])).toBe('No partial matches.');
+    expect(summarizePartials([{ length: 4, words: ['cccc'] }])).toBe('1 partial anagram in 1 group.');
+    expect(summarizePartials([])).toBe('No partial anagrams.');
   });
 });

@@ -29,9 +29,9 @@ test('home -> results -> partials -> edit letters', async ({ page }) => {
   await expect(page.locator('#exact-section')).toContainText('care');
 });
 
-test('no exact matches opens partials automatically', async ({ page }) => {
+test('no anagrams opens partials automatically', async ({ page }) => {
   await page.goto('/results?letters=tcaorpe');
-  await expect(page.locator('#exact-section')).toContainText('No exact matches');
+  await expect(page.locator('#exact-section')).toContainText('No anagrams');
   await expect(page.locator('#partials-section h3').first()).toHaveText('6 letters');
   await expect(page.locator('#partials-button')).toBeHidden();
 });
@@ -45,8 +45,8 @@ test('short input shows no matches without errors', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto('/results?letters=ab');
-  await expect(page.locator('#exact-section')).toContainText('No exact matches');
-  await expect(page.locator('#partials-section')).toContainText('No partial matches');
+  await expect(page.locator('#exact-section')).toContainText('No anagrams');
+  await expect(page.locator('#partials-section')).toContainText('No partial anagrams');
   expect(errors).toEqual([]);
 });
 

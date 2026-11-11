@@ -12,20 +12,12 @@ export interface ExactView {
 
 /**
  * Presentation rule for exact matches: a result identical to the input is
- * redundant, so it is hidden. The heading says so when that happened, which
- * keeps a player who typed a real word from wondering where it went.
+ * redundant, so it is hidden. The heading calls the rest "Anagrams", and no one
+ * expects a word among its own anagrams, so the hiding needs no explanation.
  */
 export function presentExact(matches: string[], letters: string): ExactView {
-  const inputWasWord = matches.includes(letters);
   const words = matches.filter((word) => word !== letters);
-  const heading =
-    words.length > 0
-      ? inputWasWord
-        ? 'Other exact matches'
-        : 'Exact matches'
-      : inputWasWord
-        ? 'No other exact matches'
-        : 'No exact matches';
+  const heading = words.length > 0 ? 'Anagrams' : 'No anagrams';
   const note = letters.length < MIN_WORD_LENGTH ? 'Words need at least four letters.' : null;
   return { words, heading, openPartials: words.length === 0, note };
 }

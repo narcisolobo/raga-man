@@ -6,34 +6,34 @@ describe('presentExact', () => {
   it('lists every match when the input is not itself a word', () => {
     expect(presentExact(['carpet'], 'cartep')).toEqual({
       words: ['carpet'],
-      heading: 'Exact matches',
+      heading: 'Anagrams',
       openPartials: false,
       note: null,
     });
   });
 
-  it('opens partials with the plain heading when nothing matches', () => {
+  it('opens partials when nothing matches', () => {
     expect(presentExact([], 'tcaorpe')).toEqual({
       words: [],
-      heading: 'No exact matches',
+      heading: 'No anagrams',
       openPartials: true,
       note: null,
     });
   });
 
-  it('hides the input and says "Other" when other anagrams remain', () => {
+  it('hides the input when other anagrams remain', () => {
     expect(presentExact(['enlist', 'inlets', 'listen', 'silent', 'tinsel'], 'listen')).toEqual({
       words: ['enlist', 'inlets', 'silent', 'tinsel'],
-      heading: 'Other exact matches',
+      heading: 'Anagrams',
       openPartials: false,
       note: null,
     });
   });
 
-  it('treats a word whose only match is itself as no other matches and opens partials', () => {
+  it('treats a word whose only match is itself as no anagrams and opens partials', () => {
     expect(presentExact(['firework'], 'firework')).toEqual({
       words: [],
-      heading: 'No other exact matches',
+      heading: 'No anagrams',
       openPartials: true,
       note: null,
     });
