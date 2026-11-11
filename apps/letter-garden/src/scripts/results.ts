@@ -1,5 +1,6 @@
 import { loadTrie } from '../lib/data';
-import { puzzleUrl, readPuzzle } from '../lib/puzzle';
+import { renderStaticSquares } from '@solver-suite/ui/squares';
+import { entryOrder, puzzleUrl, readPuzzle } from '../lib/puzzle';
 import { findWords } from '../lib/search';
 import { mountPuzzleForm } from './puzzle-form';
 import { renderResults } from './word-groups';
@@ -10,9 +11,11 @@ export function mountResults(): void {
   const heading = document.querySelector<HTMLElement>('#results-heading')!;
   if (!result.ok) {
     heading.textContent = 'Check your letters';
+    heading.classList.remove('sr-only');
     document.querySelector<HTMLElement>('#invalid-puzzle')!.hidden = false;
     const repair = mountPuzzleForm(document.querySelector<HTMLFormElement>('#repair-form')!);
-    repair.reset(url.searchParams.get('letters') ?? '', url.searchParams.get('required')?.toLowerCase() ?? '');
+    // Keep the field exactly as the link gave it, so the error describes what the visitor sees.
+    repair.reset(url.searchParams.get('letters') ?? '', '');
     repair.showError(result.field, result.message);
     return;
   }
@@ -22,7 +25,7 @@ export function mountResults(): void {
   if (url.pathname + url.search !== canonical) history.replaceState(history.state, '', canonical + url.hash);
 
   const summary = document.querySelector<HTMLElement>('#puzzle-summary')!;
-  const letters = document.querySelector<HTMLElement>('#summary-letters')!;
+  const squares = document.querySelector<HTMLElement>('#summary-squares')!;
   const required = document.querySelector<HTMLElement>('#summary-required')!;
   const edit = document.querySelector<HTMLButtonElement>('#edit-puzzle')!;
   const editPanel = document.querySelector<HTMLElement>('#edit-puzzle-panel')!;
@@ -34,8 +37,9 @@ export function mountResults(): void {
   const form = mountPuzzleForm(editForm, puzzle);
   let loading = false;
 
-  letters.textContent = [...puzzle.letters.toUpperCase()].join(' ');
-  required.textContent = `Required letter ${puzzle.required.toUpperCase()}`;
+  renderStaticSquares(squares, entryOrder(puzzle).toUpperCase());
+  squares.firstElementChild?.classList.add('is-center');
+  required.textContent = `Required letter ${puzzle.required.toUpperCase()}. Letters ${[...puzzle.letters.toUpperCase()].join(' ')}.`;
   summary.hidden = false;
 
   function closeEdit(): void {

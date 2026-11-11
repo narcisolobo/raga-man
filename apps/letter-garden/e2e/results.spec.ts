@@ -38,7 +38,8 @@ test('canonicalizes valid links and edits the required letter', async ({ page })
   await page.getByRole('button', { name: 'Cancel' }).click();
   await expect(edit).toBeFocused();
   await edit.click();
-  await page.getByRole('radio', { name: 'R', exact: true }).check();
+  await expect(letters).toHaveValue('cainort');
+  await letters.fill('rcainot');
   await page.getByRole('button', { name: 'Solve' }).click();
   await expect(page).toHaveURL('/results?letters=acinort&required=r');
   await expect(page.getByText('ration', { exact: true })).toBeVisible();
@@ -107,10 +108,7 @@ test('keeps labels and controls usable at twice the normal scale', async ({ page
   await page.setViewportSize({ width: 640, height: 900 });
   await page.goto('/');
   await page.evaluate(() => { document.documentElement.style.zoom = '2'; });
-  await page.getByRole('textbox', { name: 'Puzzle letters' }).fill('acinort');
-  const radio = page.getByRole('radio', { name: 'C', exact: true });
-  await radio.check();
-  await expect(radio).toBeChecked();
+  await page.getByRole('textbox', { name: 'Puzzle letters' }).fill('cainort');
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(640);
   await page.getByRole('button', { name: 'Solve' }).click();
   await expect(page).toHaveURL(puzzle);

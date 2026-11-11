@@ -1,66 +1,59 @@
-import { puzzleUrl, readLetters, validatePuzzle, type Puzzle } from '../lib/puzzle';
+import { syncSquares } from '@solver-suite/ui/squares';
+import { fieldValue, puzzleUrl, readLetters, validatePuzzle, type Puzzle } from '../lib/puzzle';
+
+/** Squares in a puzzle; the first is the required letter. */
+const SIZE = 7;
+/** Most squares drawn, so a long paste shows its extras (in error) without filling the page. */
+const MAX_SQUARES = SIZE * 3;
 
 export function mountPuzzleForm(form: HTMLFormElement, initial?: Puzzle) {
   const input = form.querySelector<HTMLInputElement>('input[name=letters]')!;
-  const fieldset = form.querySelector<HTMLFieldSetElement>('[data-required-field]')!;
-  const choices = form.querySelector<HTMLElement>('[data-required-letters]')!;
-  const hint = form.querySelector<HTMLElement>('[data-selector-hint]')!;
+  const squares = form.querySelector<HTMLElement>('[data-squares]')!;
+  const count = form.querySelector<HTMLElement>('[data-count]')!;
   const note = form.querySelector<HTMLElement>('[data-letters-note]')!;
-  const lettersError = form.querySelector<HTMLElement>('[data-letters-error]')!;
-  const requiredError = form.querySelector<HTMLElement>('[data-required-error]')!;
-  let renderedLetters = '';
+  const error = form.querySelector<HTMLElement>('[data-letters-error]')!;
   let composing = false;
+  let requiredInvalid = false;
 
-  function selectedLetter(): string {
-    return choices.querySelector<HTMLInputElement>('input:checked')?.value ?? '';
-  }
-
-  function refresh(required = selectedLetter()): void {
+  function refresh(): void {
     const entry = readLetters(input.value);
     if (note.textContent !== entry.note) note.textContent = entry.note;
-    const letters = entry.message ? '' : [...entry.letters].sort().join('');
-    if (letters !== renderedLetters) {
-      renderedLetters = letters;
-      const options = [...letters].map((letter) => {
-        const label = document.createElement('label');
-        const radio = document.createElement('input');
-        radio.type = 'radio';
-        radio.name = 'required';
-        radio.value = letter;
-        radio.setAttribute('aria-describedby', requiredError.id);
-        const tile = document.createElement('span');
-        tile.textContent = letter.toUpperCase();
-        label.append(radio, tile);
-        return label;
-      });
-      choices.replaceChildren(...options);
-    }
-    hint.hidden = !!letters;
-    for (const radio of choices.querySelectorAll('input')) radio.checked = radio.value === required;
+
+    const caret = input.selectionStart ?? input.value.length;
+    const active = readLetters(input.value.slice(0, Math.max(0, caret))).letters.length;
+    const shown = entry.letters.slice(0, MAX_SQUARES);
+    const wanted = Math.max(SIZE, Math.ceil(shown.length / SIZE) * SIZE);
+    syncSquares(squares, shown, wanted, active);
+
+    const seen = new Set<string>();
+    Array.from(squares.children).forEach((square, index) => {
+      const letter = shown[index] ?? '';
+      const repeated = letter !== '' && seen.has(letter);
+      if (letter) seen.add(letter);
+      square.classList.toggle('is-center', index === 0);
+      square.classList.toggle('is-error', (letter !== '' && (repeated || index >= SIZE)) || (index === 0 && requiredInvalid));
+    });
+    count.textContent = `${entry.letters.length} / ${SIZE}`;
   }
 
   function clearErrors(): void {
-    lettersError.textContent = '';
-    requiredError.textContent = '';
+    error.textContent = '';
+    requiredInvalid = false;
     input.removeAttribute('aria-invalid');
-    fieldset.removeAttribute('aria-invalid');
   }
 
   function showError(field: 'letters' | 'required', message: string, focus = false): void {
-    const target = field === 'letters' ? input : fieldset;
-    const error = field === 'letters' ? lettersError : requiredError;
-    target.setAttribute('aria-invalid', 'true');
+    input.setAttribute('aria-invalid', 'true');
     error.textContent = message;
-    if (focus) {
-      const firstRadio = choices.querySelector<HTMLInputElement>('input');
-      (field === 'required' && firstRadio ? firstRadio : target).focus();
-    }
+    requiredInvalid = field === 'required';
+    refresh();
+    if (focus) input.focus();
   }
 
   function reset(letters: string, required: string): void {
-    input.value = letters;
+    input.value = fieldValue(letters, required);
     clearErrors();
-    refresh(required);
+    refresh();
   }
 
   function updateEntry(): void {
@@ -76,12 +69,16 @@ export function mountPuzzleForm(form: HTMLFormElement, initial?: Puzzle) {
   input.addEventListener('input', (event) => {
     if (!composing && !(event instanceof InputEvent && event.isComposing)) updateEntry();
   });
-  choices.addEventListener('change', clearErrors);
+  for (const type of ['keyup', 'click', 'focus', 'blur']) input.addEventListener(type, refresh);
+  document.addEventListener('selectionchange', () => {
+    if (document.activeElement === input) refresh();
+  });
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     if (composing) return;
     clearErrors();
-    const result = validatePuzzle(input.value, selectedLetter());
+    const { letters } = readLetters(input.value);
+    const result = validatePuzzle(input.value, letters[0] ?? '');
     if (result.ok) window.location.assign(puzzleUrl(result.puzzle));
     else showError(result.field, result.message, true);
   });

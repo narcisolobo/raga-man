@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-test('validates input and retains the required letter through reordering', async ({ page }) => {
+test('validates input and explains what it ignored', async ({ page }) => {
   await page.goto('/');
   const letters = page.getByRole('textbox', { name: 'Puzzle letters' });
   const solve = page.getByRole('button', { name: 'Solve' });
@@ -9,47 +9,36 @@ test('validates input and retains the required letter through reordering', async
   await expect(page.getByRole('alert').filter({ hasText: 'Use seven different letters.' })).toBeVisible();
   await expect(letters).toBeFocused();
   await letters.fill('TRO NICA!');
-  await expect(page.getByText('Only letters A through Z were kept.')).toBeVisible();
+  await expect(page.getByText('Ignoring anything that is not a letter.')).toBeVisible();
   await solve.click();
-  await expect(page.getByRole('alert').filter({ hasText: 'Choose one of your seven letters' })).toBeVisible();
-  await page.getByRole('radio', { name: 'A', exact: true }).press('ArrowRight');
-  const required = page.getByRole('radio', { name: 'C', exact: true });
-  await expect(required).toBeChecked();
-  await letters.fill('acinort');
-  await expect(required).toBeChecked();
-  await letters.fill('ainortx');
-  await expect(page.locator('input[name=required]:checked')).toHaveCount(0);
-  await expect(page).toHaveURL('/');
+  await expect(page).toHaveURL('/results?letters=acinort&required=t');
 });
 
-test('waits for composition to finish before updating the selector', async ({ page }) => {
+test('the first square is the center and repeated letters are flagged', async ({ page }) => {
   await page.goto('/');
   const letters = page.getByRole('textbox', { name: 'Puzzle letters' });
-  await letters.fill('acinort');
-  await page.getByRole('radio', { name: 'C', exact: true }).check();
-  await letters.dispatchEvent('compositionstart');
-  await letters.fill('ainortx');
-  await expect(page.getByRole('radio', { name: 'C', exact: true })).toBeChecked();
-  await letters.dispatchEvent('compositionend');
-  await expect(page.getByRole('radio', { name: 'X', exact: true })).toBeVisible();
-  await expect(letters).toHaveValue('ainortx');
+  await expect(page.locator('.sq')).toHaveCount(7);
+  await expect(page.locator('.sq.is-center')).toHaveCount(1);
+  await letters.fill('cainort');
+  await expect(page.locator('.sq.is-center')).toHaveText('c');
+  await expect(page.locator('.sq.is-error')).toHaveCount(0);
+  await letters.fill('aacnort');
+  await expect(page.locator('.sq.is-error')).toHaveCount(1);
+  await expect(page.locator('.sq.is-error')).toHaveText('a');
+  await expect(page.locator('[data-count]')).toHaveText('7 / 7');
+  await letters.fill('cainortx');
+  await expect(page.locator('.sq')).toHaveCount(14);
+  await expect(page.locator('.sq.is-error')).toHaveCount(1);
 });
 
 test('accepts a pasted set and supports a keyboard-only solve', async ({ page }) => {
   await page.goto('/');
   const letters = page.getByRole('textbox', { name: 'Puzzle letters' });
   await letters.focus();
-  await page.keyboard.insertText('TRO NICA!');
-  await expect(letters).toHaveValue('TRO NICA!');
-  await expect(page.getByText('Only letters A through Z were kept.')).toBeVisible();
+  await page.keyboard.insertText('C AINORT!');
+  await expect(letters).toHaveValue('C AINORT!');
+  await expect(page.getByText('Ignoring anything that is not a letter.')).toBeVisible();
   await letters.press('Tab');
-  const first = page.getByRole('radio', { name: 'A', exact: true });
-  await expect(first).toBeFocused();
-  await first.press('ArrowRight');
-  const required = page.getByRole('radio', { name: 'C', exact: true });
-  await expect(required).toBeFocused();
-  await expect(required).toBeChecked();
-  await required.press('Tab');
   const solve = page.getByRole('button', { name: 'Solve' });
   await expect(solve).toBeFocused();
   await solve.press('Enter');

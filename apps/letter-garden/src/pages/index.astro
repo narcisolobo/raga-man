@@ -6,7 +6,7 @@ import { MIN_WORD_LENGTH } from '../lib/search';
 <Base title="letter-garden">
   <main class="garden">
     <h1>Find words</h1>
-    <p>Enter seven different letters and pick the one every word must include. Words must have at least {MIN_WORD_LENGTH} letters.</p>
+    <p>Enter seven different letters, the required one first. Words must have at least {MIN_WORD_LENGTH} letters.</p>
     <PuzzleForm id="puzzle-form" />
     <p><a href="/results?letters=acinort&amp;required=c">Try an example</a></p>
     <noscript>Turn on JavaScript to find words.</noscript>
@@ -15,5 +15,5 @@ import { MIN_WORD_LENGTH } from '../lib/search';
 <script>
   import { mountPuzzleForm } from '../scripts/puzzle-form';
 
-  mountPuzzleForm(document.querySelector<HTMLFormElement>('#puzzle-form')!);
+  mountPuzzleForm(document.querySelector<HTMLFormElement>('#puzzle-form')!).input.focus();
 </script>

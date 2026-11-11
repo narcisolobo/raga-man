@@ -6,8 +6,7 @@ test('solves a puzzle from the form and preserves the results on refresh', async
     if (new URL(request.url()).pathname.startsWith('/data/')) dataRequests.push(request.url());
   });
   await page.goto('/');
-  await page.getByRole('textbox', { name: 'Puzzle letters' }).fill('T R O N I C A');
-  await page.getByRole('radio', { name: 'C', exact: true }).check();
+  await page.getByRole('textbox', { name: 'Puzzle letters' }).fill('C T R O N I A');
   expect(dataRequests).toEqual([]);
   await page.getByRole('button', { name: 'Solve' }).click();
   await expect(page).toHaveURL('/results?letters=acinort&required=c');

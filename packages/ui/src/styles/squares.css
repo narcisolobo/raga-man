@@ -45,6 +45,23 @@
 .field:focus-within .sq.is-active.is-end::after { left: auto; right: 7px; }
 @keyframes blink { 50% { opacity: 0; } }
 
+/* Center: the first square is the one every word must use. A text tag carries
+   the meaning, the fill and inset ring only back it up. */
+.squares.has-center { margin-top: 1.75rem; }
+.sq.is-center { background: var(--mark); box-shadow: inset 0 0 0 2px var(--ink); }
+.sq.is-center::before {
+  content: 'Center';
+  position: absolute;
+  left: 0;
+  top: -1.375rem;
+  font: 700 0.75rem/1 var(--sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+/* Error: colour plus a bar under the letter, so it never depends on hue alone. */
+.sq.is-error { color: var(--error); box-shadow: inset 0 -6px 0 var(--error); }
+.sq.is-center.is-error { box-shadow: inset 0 0 0 2px var(--ink), inset 0 -6px 0 var(--error); }
+
 .field input {
   position: absolute;
   inset: 0;
@@ -68,6 +85,7 @@ html:not(.js) .field input { position: static; height: 4rem; padding: 0 1rem; bo
 @media (forced-colors: active) {
   .js .field input { forced-color-adjust: none; color: transparent; }
   .sq { border-color: CanvasText; }
+  .sq.is-error { outline: 3px dashed CanvasText; outline-offset: -5px; }
   .field:focus-within .sq.is-active { outline-color: Highlight; }
 }
 @media (prefers-reduced-motion: reduce) {

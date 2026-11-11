@@ -4,10 +4,11 @@ import Base from '../layouts/Base.astro';
 ---
 <Base title="Results | letter-garden">
   <main class="garden">
-    <h1 id="results-heading">Results</h1>
+    <h1 id="results-heading" class="sr-only">Results</h1>
     <div id="puzzle-summary" hidden>
-      <p id="summary-letters" class="summary-letters"></p>
-      <p id="summary-required"></p>
+      <div class="field-head"><p class="label">Your letters</p></div>
+      <div id="summary-squares" class="squares has-center" aria-hidden="true"></div>
+      <p id="summary-required" class="sr-only"></p>
       <button class="btn-secondary" id="edit-puzzle" type="button">Edit letters</button>
     </div>
     <div id="edit-puzzle-panel" hidden>
