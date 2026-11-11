@@ -1,0 +1,57 @@
+/* Results lists shared by every solver: section labels over a heavy rule,
+   the best words as large ruled rows, and the rest in columns grouped by length. */
+
+.section-title,
+.group-head :is(h2, h3) {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.section-title { padding-bottom: 0.5rem; border-bottom: 2px solid var(--ink); }
+
+/* A label with its count beside it, never inside it, so the heading stays short. */
+.group-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--ink);
+}
+.group-count { font-size: 0.8125rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* The best words (anagrams, pangrams): ruled rows of large, bold, lowercase words. */
+.word-rows { list-style: none; padding: 0; }
+.word-rows li {
+  padding: 0.625rem 0;
+  border-bottom: 1px solid var(--ink);
+  font: 700 clamp(1.5rem, 7vw, 2rem)/1.2 var(--sans);
+  overflow-wrap: anywhere;
+}
+
+/* Everything else: words flowing in columns. */
+.word-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 0.5rem;
+  column-width: 9rem;
+  column-gap: 1.25rem;
+  column-rule: 1px solid var(--muted);
+}
+.word-list li {
+  break-inside: avoid;
+  padding: 0.25rem 0;
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+
+.empty-note { font-size: 0.9375rem; color: var(--muted); }
+
+/* Programmatic focus targets after the visitor opens or extends a list. */
+.group-head :is(h2, h3):focus-visible,
+.word-rows li:focus-visible,
+.word-list li:focus-visible,
+.empty-note:focus-visible {
+  outline: 3px solid var(--pencil);
+  outline-offset: 3px;
+}

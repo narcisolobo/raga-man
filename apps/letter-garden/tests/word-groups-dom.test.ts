@@ -13,8 +13,8 @@ it('paginates both kinds of lists, preserving counts and handing off focus', () 
   const sections = container.querySelectorAll('section[aria-labelledby]');
   expect(sections).toHaveLength(3);
   for (const [section, firstNew, heading] of [
-    [sections[0]!, allSeven[50], 'All seven letters (120)'],
-    [sections[2]!, words[50], '7 letters (120)'],
+    [sections[0]!, allSeven[50], 'Pangrams'],
+    [sections[2]!, words[50], '7 letters'],
   ] as const) {
     expect(section.querySelector('h2, h3')?.textContent).toBe(heading);
     expect(section.querySelectorAll('li')).toHaveLength(50);
@@ -29,7 +29,7 @@ it('paginates both kinds of lists, preserving counts and handing off focus', () 
 it('shows a single empty-state explanation when no words match', () => {
   const container = document.createElement('div');
   renderResults(container, { allSeven: [], groups: [], total: 0 });
-  expect(container.textContent).toContain('All seven letters (0)');
+  expect(container.textContent).toContain('Pangrams');
   expect(container.textContent).toContain('No words match these letters.');
   expect(container.querySelector('h3')).toBeNull();
 });
