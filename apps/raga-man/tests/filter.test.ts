@@ -10,7 +10,7 @@ describe('filterWords', () => {
     expect(filterWords(['race', 'acre'])).toEqual(['acre', 'race']);
   });
   it('cleans the real wamerican list', () => {
-    const words = filterWords(readFileSync('data/wamerican.txt', 'utf8').split('\n'));
+    const words = filterWords(readFileSync(new URL('../../../data/wamerican/words.txt', import.meta.url), 'utf8').split('\n'));
     expect(words).toContain('carpet');
     expect(words.some((w) => /['A-Z]/.test(w))).toBe(false);
     expect(words.every((w) => w.length >= 4)).toBe(true);

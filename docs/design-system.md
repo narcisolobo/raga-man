@@ -141,6 +141,8 @@ components:
 
 # Design System: raga-man
 
+Source paths below are relative to `apps/raga-man/`. This document records the existing raga-man design; shared tokens and layout code will be extracted when letter-garden is implemented.
+
 Scope: the home page `/` and the results page `/results` share one system. Tokens, base, masthead, theme toggle, letter squares, field, Solve and the secondary button live in `src/styles/global.css`, loaded through the `src/layouts/Base.astro` layout (head, pre-paint theme script, masthead). Results-only rules (lists, groups, notes, the back link) live in `src/styles/results.css` and add no new tokens; they inherit every custom property from the global sheet.
 
 ## Overview

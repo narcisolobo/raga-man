@@ -1,6 +1,6 @@
 # A suite of solvers: a loose plan
 
-Status: idea stage. Nothing here is committed to; it exists so the thinking is written down. Drafted 2026-11-06.
+Status: product roadmap, with workspace preparation completed 2026-11-10. letter-garden is the chosen next solver; the remaining candidates are ideas. Drafted 2026-11-06.
 
 ## Why a suite
 
@@ -39,19 +39,19 @@ Ordered by how I would build them. "Reuse" means how much of raga-man's engine c
 
 ## What is already reusable
 
-From raga-man today:
+From raga-man today (source paths below are relative to `apps/raga-man/`):
 
 - `src/lib`: `letters`, `entry`, `exact`, `trie`, `filter`, `data`, `exact-view`. The normalization, the sorted-key index, the trie search and the data loaders.
 - `src/scripts`: `letter-field` (the squares-over-a-real-input component), `partials` (grouped, paged word lists) and `theme`.
 - `src/layouts/Base.astro` and `src/styles/global.css`: the masthead, theme toggle, tokens and shared components.
-- `DESIGN.md`: the recorded design system, which is the thing that makes the tools feel like one family.
+- `docs/design-system.md`: the recorded design system, which is the thing that makes the tools feel like one family.
 - `scripts/build-data.ts`: the word-data pipeline, which would be parameterized by word list and length rules.
 
 What each new solver needs of its own: a word list and filters, its own search rules, and any input components that do not exist yet (a tile-state grid, a letter grid, a required-letter marker).
 
 ## Structure and hosting (open questions)
 
-**One repo or many.** A monorepo with a shared package avoids copying the system around. Separate repos keep deploys independent. My suggestion: stay in this repo until the second solver actually exists, then extract the shared pieces and decide. Extracting before there is a second consumer risks guessing the wrong seams.
+**Repository structure.** A pnpm workspace now holds `apps/raga-man/` and preparation notes in `apps/letter-garden/`. Each implemented app owns its Astro configuration, tests, generated assets, and Worker deployment. Source dictionaries and license notices live under `data/`. The workspace reserves `packages/*` for shared modules. Extract `word-data` and `ui` as letter-garden is implemented, guided by the second consumer; keep solver-specific rules in each app.
 
 **Where they live.** Register a new domain through Cloudflare, so its DNS zone is on Cloudflare from the start. Worker custom domains need an active Cloudflare zone, which is why `narcisolobo.com` (DNS at GoDaddy, with many records) is staying as it is. Each solver would be its own Worker on its own subdomain, via a `custom_domain: true` route in its `wrangler.jsonc`, with the bare domain for a small index page linking to all of them.
 
@@ -61,26 +61,26 @@ What each new solver needs of its own: a word list and filters, its own search r
 
 ## Word lists
 
-- raga-man uses Debian `wamerican` (SCOWL): lowercase a to z, four letters or more.
+- raga-man uses Debian `wamerican` (SCOWL), stored in `data/wamerican/`: lowercase a to z, four letters or more.
 - Each solver should name its list and say why. Puzzle-specific tools may want different length rules or a list that keeps proper nouns.
 - A Scrabble-style rack solver would want a tournament dictionary. Those have licensing terms, so check them first. Free lists such as ENABLE exist; check their terms too.
 - The five-letter helper may want results ranked by how common a word is. That needs a frequency source, which is not chosen yet.
 
 ## Rough sequencing
 
-1. Finish and commit raga-man's current work. Decide on the domain.
-2. When the second solver starts, extract the shared pieces. Not before.
+1. Workspace preparation complete: raga-man lives in `apps/raga-man/`. Decide on the domain separately.
+2. When letter-garden implementation starts, extract the shared word-data and UI modules. See `apps/letter-garden/README.md`.
 3. letter-garden (letter-set helper).
 4. Five-letter helper.
 5. Pick the rest by what actually gets used. Add the index page at the bare domain once there are two or three to link to.
 
-Each solver goes through the same loop: a short product brief, shape the page, build, review, then document what was built in `DESIGN.md`.
+Each solver goes through the same loop: a short product brief, shape the page, build, review, then document what was built in the shared design system or the app's product records, as appropriate.
 
 ## Risks and open questions
 
 - **Design drift.** Several sites on one design system will diverge unless it is shared and versioned. This is the main argument for extracting the shared code early.
 - **Upkeep.** Every solver is a site to maintain. Keep each one small, static and boring.
 - **Scope creep inside a tool.** Each solver should refuse the features that belong to a different job, the way raga-man now refuses Scrabble.
-- **Product records.** `PRODUCT.md` is written for one product. With several solvers it needs either one file per solver or a shared section plus per-solver sections. Undecided.
+- **Product records.** Product briefs and behavior specs live alongside each app as `PRODUCT.md` and `SPEC.md`. The shared design system lives in `docs/design-system.md`.
 - **Spoilers.** A full-board solver gives away the whole puzzle. Decide deliberately whether that is the kind of tool wanted.
 - **Cost and ownership.** The domain registration and any renewal are the owner's to decide.

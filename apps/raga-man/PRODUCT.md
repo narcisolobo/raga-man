@@ -30,7 +30,7 @@ Phone first, desktop second. Used in short bursts, often one-handed, usually wit
 The name is **raga-man** (an "anagram" pun) and is final. The voice is plain: short, functional interface copy with no jokes or personality in the UI text.
 
 ## Evidence on Hand
-No testimonials, usage data, logos or brand assets exist. Do not fabricate any. The word data is in `data/` and built by `scripts/build-data.ts`.
+No testimonials, usage data, logos or brand assets exist. Do not fabricate any. The word data is in `../../data/wamerican/` and built by `scripts/build-data.ts`.
 
 ## Product Principles
 - Speed to the answer outranks everything: the first interaction is never slow and the exact answer appears first.

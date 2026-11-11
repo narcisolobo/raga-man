@@ -2,7 +2,7 @@
 node_modules/
 dist/
 .astro/
-public/data/
+apps/*/public/data/
 test-results/
 .wrangler/
 .impeccable/mocks/
