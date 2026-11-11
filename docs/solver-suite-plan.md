@@ -13,11 +13,11 @@ The rule for splitting is **by job, not by feature**. Scrabble was taken out of 
 - One job per tool, answered in a second or two.
 - Phone first, one column, thumb-sized targets.
 - No junk: every word shown should be one a player would plausibly accept.
-- Plain voice, no jokes in the interface.
+- Plain voice, no jokes in the interface. Use American English.
 - Static and client-side over prebuilt data: no accounts, no history, no backend.
-- WCAG 2.2 AA, both colour themes, keyboard and screen-reader support.
+- WCAG 2.2 AA, both color themes, keyboard and screen-reader support.
 - Say plainly what the word list cannot know. Each game uses its own curated list, so a general dictionary will sometimes show words the game rejects, or miss words it accepts.
-- Descriptive names only. Never use a game's own (trademarked) name for a tool.
+- Playful, descriptive names that suggest the tool's job, such as raga-man and letter-garden. Never use a game's own (trademarked) name for a tool.
 
 ## Candidate solvers
 
@@ -25,8 +25,8 @@ Ordered by how I would build them. "Reuse" means how much of raga-man's engine c
 
 | # | Solver | Question it answers | Input | Reuse |
 |---|--------|---------------------|-------|-------|
-| 1 | **Letter-set helper** (Spelling Bee style) | Which words use only these seven letters and include the centre one? Which use all seven? | Seven letters, one marked required | High: the same trie search with one changed rule (letters may repeat) |
-| 2 | **Five-letter helper** (Wordle style) | Given my guesses and their tile colours, what is left? | A guess grid with tappable green, yellow and grey tiles | Medium: a constraint filter over a five-letter list, with a new input |
+| 1 | **letter-garden**, the letter-set helper (Spelling Bee style) | Which words use only these seven letters and include the center one? Which use all seven? | Seven letters, one marked required | High: the same trie search with one changed rule (letters may repeat) |
+| 2 | **Five-letter helper** (Wordle style) | Given my guesses and their tile colors, what is left? | A guess grid with tappable green, yellow and gray tiles | Medium: a constraint filter over a five-letter list, with a new input |
 | 3 | **Pattern helper** (crossword and hangman) | Which words fit `c_r_et`, minus these letters? | A pattern with blanks, plus excluded letters | High: a length-and-pattern lookup. Needs a list that includes proper nouns |
 | 4 | **Multi-word anagram finder** | Which sets of words together use every letter? | Letters, as in raga-man | Medium: new search over the existing index. Names and phrases are the typical use |
 | 5 | **Board solver** (Strands or Boggle style) | Which words can be traced through adjacent cells of this grid? | The full letter grid | Medium: grid search over the trie. More spoiler-heavy than raga-man, so a different product |
@@ -35,7 +35,7 @@ Ordered by how I would build them. "Reuse" means how much of raga-man's engine c
 
 **Not recommended.** A connections-style helper depends on meaning, not spelling, so a word list will not get you there. Cipher and cryptogram solvers are a different engine entirely.
 
-**Suggested first two: 1 and 2.** The letter-set helper is the smallest step and reaches the same audience. The five-letter helper has the biggest audience and is a good test of whether the shared design system holds up on a new kind of input.
+**Suggested first two: 1 and 2.** letter-garden is the smallest step and reaches the same audience. The five-letter helper has the biggest audience and is a good test of whether the shared design system holds up on a new kind of input.
 
 ## What is already reusable
 
@@ -70,7 +70,7 @@ What each new solver needs of its own: a word list and filters, its own search r
 
 1. Finish and commit raga-man's current work. Decide on the domain.
 2. When the second solver starts, extract the shared pieces. Not before.
-3. Letter-set helper.
+3. letter-garden (letter-set helper).
 4. Five-letter helper.
 5. Pick the rest by what actually gets used. Add the index page at the bare domain once there are two or three to link to.
 
