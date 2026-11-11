@@ -1,0 +1,29 @@
+---
+interface Props {
+  id: string;
+  cancel?: boolean;
+}
+const { id, cancel = false } = Astro.props;
+const inputId = `${id}-letters`;
+const hintId = `${id}-hint`;
+const noteId = `${id}-note`;
+const errorId = `${id}-error`;
+---
+<form id={id} class="puzzle-form" method="get" action="/results" novalidate>
+  <div class="field-head">
+    <label for={inputId}>Puzzle letters</label>
+    <span class="count" data-count aria-hidden="true">0 / 7</span>
+  </div>
+  <div class="field">
+    <div class="squares has-center" data-squares aria-hidden="true">
+      <span class="sq is-active is-center"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span>
+    </div>
+    <input id={inputId} name="letters" type="text" enterkeyhint="go" autocomplete="off" autocapitalize="characters"
+      autocorrect="off" spellcheck="false" aria-describedby={`${hintId} ${noteId} ${errorId}`} />
+  </div>
+  <p id={hintId} class="hint">Type the required letter first, then the other six.</p>
+  <p id={noteId} class="input-note" data-letters-note aria-live="polite"></p>
+  <p id={errorId} class="form-error" data-letters-error role="alert"></p>
+  <button class="solve" type="submit">Solve</button>
+  {cancel && <button class="btn-secondary" type="button" data-cancel>Cancel</button>}
+</form>

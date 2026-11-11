@@ -166,14 +166,14 @@ importers:
 
   .: {}
 
-  apps/raga-man:
+  apps/letter-garden:
     dependencies:
-      '@fontsource-variable/libre-franklin':
-        specifier: ^5.3.0
-        version: 5.3.0
-      '@fontsource/old-standard-tt':
-        specifier: ^5.3.0
-        version: 5.3.0
+      '@solver-suite/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      '@solver-suite/word-data':
+        specifier: workspace:*
+        version: link:../../packages/word-data
       astro:
         specifier: ^7.4.5
         version: 7.4.5(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15)(yaml@2.9.1)
@@ -202,6 +202,64 @@ importers:
       wrangler:
         specifier: ^4.157.0
         version: 4.157.0(@types/node@26.6.6)
+
+  apps/raga-man:
+    dependencies:
+      '@solver-suite/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      '@solver-suite/word-data':
+        specifier: workspace:*
+        version: link:../../packages/word-data
+      astro:
+        specifier: ^7.4.5
+        version: 7.4.5(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15)(yaml@2.9.1)
+    devDependencies:
+      '@astrojs/check':
+        specifier: ^0.9.12
+        version: 0.9.12(@emnapi/runtime@1.11.3)(prettier@3.9.10)(typescript@6.0.3)
+      '@playwright/test':
+        specifier: ^1.64.1
+        version: 1.64.1
+      '@types/node':
+        specifier: ^26.6.6
+        version: 26.6.6
+      happy-dom:
+        specifier: ^21.0.4
+        version: 21.0.4
+      tsx:
+        specifier: ^4.23.15
+        version: 4.23.15
+      typescript:
+        specifier: ~6.0.3
+        version: 6.0.3
+      vitest:
+        specifier: ^5.1.0
+        version: 5.1.0(@types/node@26.6.6)(happy-dom@21.0.4)(vite@8.3.5(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15)(yaml@2.9.1))
+      wrangler:
+        specifier: ^4.157.0
+        version: 4.157.0(@types/node@26.6.6)
+
+  packages/ui:
+    dependencies:
+      '@fontsource-variable/libre-franklin':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/old-standard-tt':
+        specifier: ^5.3.0
+        version: 5.3.0
+      astro:
+        specifier: ^7.4.5
+        version: 7.4.5(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15)(yaml@2.9.1)
+
+  packages/word-data:
+    devDependencies:
+      typescript:
+        specifier: ~6.0.3
+        version: 6.0.3
+      vitest:
+        specifier: ^5.1.0
+        version: 5.1.0(@types/node@26.6.6)(happy-dom@21.0.4)(vite@8.3.5(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15)(yaml@2.9.1))
 
 packages:
 

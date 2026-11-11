@@ -1,6 +1,6 @@
 # A suite of solvers: a loose plan
 
-Status: product roadmap, with workspace preparation completed 2026-11-10. letter-garden is the chosen next solver; the remaining candidates are ideas. Drafted 2026-11-06.
+Status: raga-man and letter-garden are implemented. The remaining candidates are ideas. Drafted 2026-11-06.
 
 ## Why a suite
 
@@ -37,21 +37,15 @@ Ordered by how I would build them. "Reuse" means how much of raga-man's engine c
 
 **Suggested first two: 1 and 2.** letter-garden is the smallest step and reaches the same audience. The five-letter helper has the biggest audience and is a good test of whether the shared design system holds up on a new kind of input.
 
-## What is already reusable
+## Shared code
 
-From raga-man today (source paths below are relative to `apps/raga-man/`):
-
-- `src/lib`: `letters`, `entry`, `exact`, `trie`, `filter`, `data`, `exact-view`. The normalization, the sorted-key index, the trie search and the data loaders.
-- `src/scripts`: `letter-field` (the squares-over-a-real-input component), `partials` (grouped, paged word lists) and `theme`.
-- `src/layouts/Base.astro` and `src/styles/global.css`: the masthead, theme toggle, tokens and shared components.
-- `docs/design-system.md`: the recorded design system, which is the thing that makes the tools feel like one family.
-- `scripts/build-data.ts`: the word-data pipeline, which would be parameterized by word list and length rules.
-
-What each new solver needs of its own: a word list and filters, its own search rules, and any input components that do not exist yet (a tile-state grid, a letter grid, a required-letter marker).
+- `packages/word-data` builds, encodes, and decodes tries and prepares dictionary entries according to the caller's policy.
+- `packages/ui` provides the Astro shell, design tokens, typography, and theme toggle.
+- Each app has its own search, data loader, input controls, and result presentation.
 
 ## Structure and hosting (open questions)
 
-**Repository structure.** A pnpm workspace now holds `apps/raga-man/` and preparation notes in `apps/letter-garden/`. Each implemented app owns its Astro configuration, tests, generated assets, and Worker deployment. Source dictionaries and license notices live under `data/`. The workspace reserves `packages/*` for shared modules. Extract `word-data` and `ui` as letter-garden is implemented, guided by the second consumer; keep solver-specific rules in each app.
+**Repository structure.** The pnpm workspace contains both Astro apps. Each owns its tests, generated assets, and Worker configuration. Source dictionaries and license notices live in `data/`. Shared trie storage and word preparation live in `packages/word-data`. The layout, tokens, fonts, and theme toggle live in `packages/ui`.
 
 **Where they live.** Register a new domain through Cloudflare, so its DNS zone is on Cloudflare from the start. Worker custom domains need an active Cloudflare zone, which is why `narcisolobo.com` (DNS at GoDaddy, with many records) is staying as it is. Each solver would be its own Worker on its own subdomain, via a `custom_domain: true` route in its `wrangler.jsonc`, with the bare domain for a small index page linking to all of them.
 
@@ -69,10 +63,9 @@ What each new solver needs of its own: a word list and filters, its own search r
 ## Rough sequencing
 
 1. Workspace preparation complete: raga-man lives in `apps/raga-man/`. Decide on the domain separately.
-2. When letter-garden implementation starts, extract the shared word-data and UI modules. See `apps/letter-garden/README.md`.
-3. letter-garden (letter-set helper).
-4. Five-letter helper.
-5. Pick the rest by what actually gets used. Add the index page at the bare domain once there are two or three to link to.
+2. Shared word-data and UI modules and the letter-garden app are implemented. See `apps/letter-garden/README.md`.
+3. Five-letter helper.
+4. Pick the rest by what actually gets used. Add the index page at the bare domain once there are two or three to link to.
 
 Each solver goes through the same loop: a short product brief, shape the page, build, review, then document what was built in the shared design system or the app's product records, as appropriate.
 

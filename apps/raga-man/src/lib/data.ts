@@ -1,4 +1,4 @@
-import { decodeTrie, type TrieNode } from './trie';
+import { decodeTrie, type TrieNode } from '@solver-suite/word-data/trie';
 
 let exactPromise: Promise<Map<string, string[]>> | undefined;
 let triePromise: Promise<TrieNode> | undefined;

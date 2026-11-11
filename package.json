@@ -14,7 +14,11 @@
     "preview": "pnpm --filter raga-man preview",
     "test": "pnpm -r --if-present test",
     "test:e2e": "pnpm -r --if-present test:e2e",
-    "deploy:raga-man": "pnpm --filter raga-man deploy:cf"
+    "deploy:raga-man": "pnpm --filter raga-man deploy:cf",
+    "dev:letter-garden": "pnpm --filter letter-garden dev",
+    "build:letter-garden": "pnpm --filter letter-garden build",
+    "preview:letter-garden": "pnpm --filter letter-garden preview",
+    "deploy:letter-garden": "pnpm --filter letter-garden deploy:cf"
   },
   "packageManager": "pnpm@12.18.0"
 }

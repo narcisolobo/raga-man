@@ -2,7 +2,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { buildExactIndex } from '../src/lib/exact';
 import { filterWords } from '../src/lib/filter';
-import { buildTrie, encodeTrie } from '../src/lib/trie';
+import { buildTrie, encodeTrie } from '@solver-suite/word-data/trie';
 
 export function buildData(wordLines: string[]): { exact: string; trie: string } {
   const words = filterWords(wordLines);

@@ -1,18 +1,25 @@
 # letter-garden
 
-Planned seven-letter word finder: enter seven distinct letters and choose the required center letter. Results use only those letters, may repeat letters, and must include the required letter. Identify words that use all seven letters.
+A static seven-letter word finder. Enter seven distinct letters, choose the required center letter, and find words that can be made from those letters. Results identify words that use all seven distinct letters and can be shared by URL.
 
-This directory reserves the app's place in the workspace. It has no package manifest, build, or deployment yet.
+From the repository root:
 
-Before implementation, write this app's `PRODUCT.md` and `SPEC.md`, choose and document its dictionary and minimum word length, then add its own Astro app, tests, data build, and Wrangler configuration.
+```sh
+pnpm dev:letter-garden
+pnpm build:letter-garden
+pnpm preview:letter-garden
+pnpm --filter letter-garden test
+pnpm --filter letter-garden test:e2e
+```
 
-## Shared modules to extract during implementation
+Build before running Playwright. The development and preview server use port 4322. Development and production builds generate `public/data/trie.txt` from [Debian wamerican](../../data/wamerican/README.md), derived from SCOWL. The current trie contains 41,351 words and measures 248,058 bytes raw, 59,925 bytes gzip, and 51,904 bytes Brotli using Node's default compression settings. The home page loads no dictionary.
 
-- `packages/word-data`: trie construction, encoding, decoding, and dictionary-processing mechanics. Keep dictionary selection and filtering policy explicit per app. Keep Node-only build code separate from browser exports.
-- `packages/ui`: design tokens, fonts, theme behavior, and an Astro layout with app-supplied name, subtitle, and description.
+To check the Worker bundle locally after building:
 
-Keep anagram indexing, partial-search rules, the 48-letter entry limit, and anagram presentation in raga-man. Implement letter-garden's search separately over the shared trie. Its required-letter input should follow the shared visual system without inheriting raga-man's eight-column input assumptions.
+```sh
+pnpm --filter letter-garden exec wrangler deploy --dry-run
+```
 
-Generate only the word assets this app needs into its own `public/data/`. Preserve dictionary license notices. Test and deploy each app independently; add an explicit root deployment command when this app is ready.
+For release, `pnpm deploy:letter-garden` builds and publishes only this app.
 
-See the [suite plan](../../docs/solver-suite-plan.md) and [design system](../../docs/design-system.md).
+See the [product brief](PRODUCT.md), [behavior spec](SPEC.md), and [shared design system](../../docs/design-system.md).

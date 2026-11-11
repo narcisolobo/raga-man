@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { buildData } from '../scripts/build-data';
-import { decodeTrie, searchPartials } from '../src/lib/trie';
+import { decodeTrie } from '@solver-suite/word-data/trie';
+import { searchPartials } from '../src/lib/trie';
 
 describe('buildData', () => {
   const lines = ['care', 'race', 'acre', 'Paris', "dog's", 'cart', 'carts'];

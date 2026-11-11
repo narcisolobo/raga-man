@@ -1,0 +1,41 @@
+.mast-row {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
+  container-type: inline-size;
+}
+.mast-name { grid-column: 2; font-size: clamp(1.5rem, 10cqi, 3.5rem); }
+.theme-toggle { position: static; grid-column: 3; translate: none; }
+
+.garden { padding-block: 1.75rem 0; }
+.garden h1, .garden h2, .garden h3 { font-family: var(--display); }
+.garden h1 { font-size: clamp(2.25rem, 9vw, 3.75rem); line-height: 1.1; }
+.garden h2 { font-size: 1.65rem; }
+.garden h3 { font-size: 1.25rem; }
+.garden p { margin-block-start: 0.625rem; }
+.garden a { color: var(--pencil); font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.foot a { color: inherit; text-underline-offset: 0.2em; }
+.garden a:focus-visible, .foot a:focus-visible { outline: 3px solid var(--pencil); outline-offset: 3px; }
+
+.puzzle-form { margin-block: 1.5rem; --squares-per-row: 7; }
+.puzzle-form .field-head { margin-top: 0; }
+#puzzle-summary { --squares-per-row: 7; margin-block-start: 1.25rem; }
+#puzzle-summary .field-head { margin-top: 0; }
+.garden .input-note { color: var(--muted); font-size: 0.875rem; }
+.garden .input-note:empty, .garden .form-error:empty { margin: 0; }
+.form-error { color: var(--error); font-weight: 700; }
+.form-error:not(:empty)::before { content: '! ' / ''; }
+.garden .btn-secondary { margin-block-start: 0.75rem; min-height: 44px; }
+#results-status { margin-block-start: 1.25rem; }
+#results-status:empty { margin: 0; }
+#results-content section { margin-block-start: 1rem; }
+#results-content > section { margin-block-start: 1.5rem; border-block-start: 1px solid var(--ink); padding-block-start: 0.75rem; }
+.word-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(8rem, 100%), 1fr));
+  gap: 0.25rem 1rem;
+  padding: 0;
+  margin-block-start: 0.5rem;
+  list-style: none;
+  overflow-wrap: anywhere;
+}
+.word-list li:focus { outline: 2px solid currentColor; outline-offset: 2px; }
