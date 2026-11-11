@@ -265,6 +265,9 @@ One group per word length, longest first. Each group has a label-style heading (
 - **Forced colors:** the transparent real input is kept invisible over the squares, square borders become `CanvasText`, Solve and the secondary button gain a `ButtonText` border, and the active outline becomes `Highlight`.
 - **Focus:** visible 3px pencil outlines at 3px offset on every interactive element and on programmatic focus targets (group heading, partial word, empty note); the input's own outline is suppressed because the active square shows focus instead.
 
+### App icons
+Every solver's icon is one family: a square Graphite Ink tile, the app's lowercase initial in Old Standard TT 700 (drawn from the font's own outlines) in Newsprint, and exactly one Pencil Blue object that plays on the app's name. raga-man is an "r" with a tipped bowler hat floating above the stem; letter-garden is a "g" whose ear has become a leaf. The object must read at 32px and may shrink to a fleck at 16px, where the icon is simply the letter. On the ink tile the accent is `pencil-dark`, as on any dark surface; `favicon.svg` flips to a Newsprint tile with ink letter and `pencil` accent under `prefers-color-scheme: dark`. Each app ships `favicon.svg`, plus `favicon.ico` (16, 32 and 48px) and a 180px `apple-touch-icon.png`, which always use the ink tile and are left unrounded (the OS rounds them). `pnpm icons` generates all three from the specs in [packages/icons](../packages/icons/README.md).
+
 ## Do's and Don'ts
 
 ### Do:

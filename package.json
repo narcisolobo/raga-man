@@ -18,7 +18,8 @@
     "dev:letter-garden": "pnpm --filter letter-garden dev",
     "build:letter-garden": "pnpm --filter letter-garden build",
     "preview:letter-garden": "pnpm --filter letter-garden preview",
-    "deploy:letter-garden": "pnpm --filter letter-garden deploy:cf"
+    "deploy:letter-garden": "pnpm --filter letter-garden deploy:cf",
+    "icons": "pnpm --filter @solver-suite/icons icons"
   },
   "packageManager": "pnpm@12.18.0"
 }
