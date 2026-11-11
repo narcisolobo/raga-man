@@ -1,53 +1,40 @@
-# raga-man
+# Solver suite
 
-**Live:** https://raga-man.narcisolobo.workers.dev/
+Small, static word-puzzle tools built with Astro and TypeScript. Each solver has its own input, search rules, word-data build, tests, and Cloudflare Worker deployment.
 
-A fast, mobile-friendly anagram solver built for the end of a NYT Strands puzzle. Type the letters you have left and see every word that uses all of them.
-
-<p>
-  <img src="docs/screenshot-home.png" width="280" alt="raga-man home page with an empty letter field and a Solve button">
-  <img src="docs/screenshot.png" width="280" alt="raga-man results page for the letters ELPSTA, listing palest, pastel, petals, plates, pleats and staple as exact matches">
-</p>
-
-## What it does
-
-- Exact matches first: every word that uses all of your letters.
-- Partial matches on demand: words built from a subset of the letters, grouped by length (longest first), alphabetical within a group.
-- A curated word list with no proper nouns, possessives or words under 4 letters, so results are usable without filtering by eye.
-- Results work from the URL alone (`/results?letters=...`), so they can be refreshed and shared.
-- Light and dark themes.
-
-## How it works
-
-A static [Astro](https://astro.build) and TypeScript site with no backend and no accounts. The home page downloads no word data. The word trie is fetched only when partial matches are requested. It deploys to Cloudflare Workers static assets.
+- **[raga-man](apps/raga-man/README.md)**: the anagram solver. [Live site](https://raga-man.narcisolobo.workers.dev/).
+- **[letter-garden](apps/letter-garden/README.md)**: the seven-letter word finder.
 
 ## Development
 
-Requires Node 26 or newer and [pnpm](https://pnpm.io).
+Requires Node 26 or newer and pnpm. Run from the repository root:
 
 ```sh
 pnpm install
-pnpm dev          # builds the word data, then starts the dev server
-pnpm test         # unit tests (vitest)
-pnpm test:e2e     # end-to-end tests (Playwright)
-pnpm build        # builds data, type-checks, builds the site into dist/
-pnpm deploy:cf    # build, then wrangler deploy
+pnpm dev                 # raga-man development server
+pnpm build               # build all implemented apps
+pnpm test                # unit tests across the workspace
+pnpm test:e2e            # browser tests; run pnpm build first
+pnpm preview             # preview raga-man's production build
+pnpm dev:letter-garden   # letter-garden development server on port 4322
+pnpm deploy:raga-man     # build and deploy only raga-man
+pnpm deploy:letter-garden # build and deploy only letter-garden
 ```
 
-`pnpm build:data` regenerates the word data in `public/data/` from [data/wamerican.txt](data/wamerican.txt) using [scripts/build-data.ts](scripts/build-data.ts). It runs automatically as part of `dev` and `build`.
+Use `pnpm --filter raga-man <command>` to run an app command directly. There is no suite-wide deployment command. Each app owns its Wrangler configuration and output directory.
 
-## Docs
+## Repository layout
 
-- [PRODUCT.md](PRODUCT.md): users, purpose and scope
-- [DESIGN.md](DESIGN.md): the visual system
-- [SPEC.md](SPEC.md): behavior spec
-- [data/README.md](data/README.md): where the word list comes from
+- `apps/raga-man/`: the existing app and its product records.
+- `apps/letter-garden/`: the seven-letter word finder and its product records.
+- `data/`: source dictionaries with provenance and license notices. Generated assets belong in each app's `public/data/` and are ignored by Git.
+- `docs/design-system.md`: the shared visual system and app-specific components.
+- `docs/solver-suite-plan.md`: product direction and planned shared modules.
 
-## Credits
+`packages/word-data` contains the shared trie codec and dictionary preparation. `packages/ui` contains the Astro shell, design tokens, fonts, and theme toggle. Each app owns its search rules, dictionary policy, and input and result views.
 
-- Word list: Debian's `wamerican` package, built from [SCOWL](http://wordlist.sourceforge.net/) by Kevin Atkinson. It keeps its own permissive licence; see [data/COPYRIGHT-wamerican](data/COPYRIGHT-wamerican).
-- Fonts: [Old Standard TT](https://fontsource.org/fonts/old-standard-tt) and [Libre Franklin](https://fontsource.org/fonts/libre-franklin), both open source and served through Fontsource.
+Names may be playful but should suggest the tool's job. Never use a game's own name for a tool. Use American English in documentation and interface copy.
 
 ## License
 
-The code in this repository is released under the [MIT License](LICENSE). The word list and fonts are covered by their own licences, noted above.
+The code in this repository is released under the [MIT License](LICENSE). The word list and fonts are covered by their own licenses; see [data/wamerican/COPYRIGHT](data/wamerican/COPYRIGHT) and the credits in each app's README.

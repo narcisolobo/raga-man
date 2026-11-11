@@ -1,0 +1,23 @@
+---
+import Shell from '@solver-suite/ui/layout';
+import '@solver-suite/ui/squares.css';
+import '../styles/letter-garden.css';
+
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+<Shell
+  {title}
+  description="Find words using your seven puzzle letters."
+  name="letter-garden"
+  subtitle="The seven-letter word finder"
+  themeStorageKey="letter-garden-theme"
+>
+  <slot />
+  <footer class="foot" slot="footer">
+    Uses a general dictionary. Some words may be missing or rejected by your game.{' '}
+    <a href="https://packages.debian.org/stable/wamerican">Word list from Debian wamerican (SCOWL)</a>.
+  </footer>
+</Shell>

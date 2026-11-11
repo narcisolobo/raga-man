@@ -1,0 +1,14 @@
+---
+import Shell from '@solver-suite/ui/layout';
+import '@solver-suite/ui/squares.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'Find every word hiding in your leftover letters.' } = Astro.props;
+---
+<Shell {title} {description} name="raga-man" subtitle="The anagram solver" themeStorageKey="raga-theme">
+  <slot />
+  <slot name="footer" slot="footer" />
+</Shell>

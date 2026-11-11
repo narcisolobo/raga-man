@@ -1,0 +1,17 @@
+{
+  "name": "@solver-suite/word-data",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./trie": "./src/trie.ts",
+    "./words": "./src/words.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "~6.0.3",
+    "vitest": "^5.1.0"
+  }
+}

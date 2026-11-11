@@ -1,33 +1,24 @@
 {
-  "name": "raga-man",
-  "type": "module",
-  "version": "0.0.1",
+  "name": "solver-suite",
   "private": true,
+  "type": "module",
   "engines": {
     "node": ">=26"
   },
   "scripts": {
-    "dev": "pnpm build:data && astro dev",
-    "build": "pnpm build:data && astro check && astro build",
-    "preview": "astro preview",
-    "test": "vitest run",
-    "build:data": "tsx scripts/build-data.ts",
-    "test:e2e": "playwright test",
-    "deploy:cf": "pnpm build && wrangler deploy"
+    "dev": "pnpm --filter raga-man dev",
+    "dev:raga-man": "pnpm --filter raga-man dev",
+    "build": "pnpm -r --if-present build",
+    "build:raga-man": "pnpm --filter raga-man build",
+    "build:data": "pnpm -r --if-present build:data",
+    "preview": "pnpm --filter raga-man preview",
+    "test": "pnpm -r --if-present test",
+    "test:e2e": "pnpm -r --if-present test:e2e",
+    "deploy:raga-man": "pnpm --filter raga-man deploy:cf",
+    "dev:letter-garden": "pnpm --filter letter-garden dev",
+    "build:letter-garden": "pnpm --filter letter-garden build",
+    "preview:letter-garden": "pnpm --filter letter-garden preview",
+    "deploy:letter-garden": "pnpm --filter letter-garden deploy:cf"
   },
-  "dependencies": {
-    "@fontsource-variable/libre-franklin": "^5.3.0",
-    "@fontsource/old-standard-tt": "^5.3.0",
-    "astro": "^7.4.5"
-  },
-  "devDependencies": {
-    "@astrojs/check": "^0.9.12",
-    "@playwright/test": "^1.64.1",
-    "@types/node": "^26.6.6",
-    "happy-dom": "^21.0.4",
-    "tsx": "^4.23.15",
-    "typescript": "~6.0.3",
-    "vitest": "^5.1.0",
-    "wrangler": "^4.157.0"
-  }
+  "packageManager": "pnpm@12.18.0"
 }
