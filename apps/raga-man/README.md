@@ -2,6 +2,11 @@
 
 [Live site](https://raga-man.narcisolobo.workers.dev/)
 
+<p>
+  <img src="../../docs/screenshot-home.png" width="280" alt="raga-man home page with an empty letter field and a Solve button">
+  <img src="../../docs/screenshot.png" width="280" alt="raga-man results page for the letters ELPSTA, listing palest, pastel, petals, plates, pleats and staple as exact matches">
+</p>
+
 A mobile-friendly anagram solver for leftover puzzle letters. Exact matches appear first; partial matches are available on demand, grouped by length. Results can be shared through `/results?letters=...`.
 
 The app is static and runs entirely in the browser. The home page downloads no word data, and the trie is fetched only when partial matches are requested.
