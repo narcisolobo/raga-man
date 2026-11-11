@@ -20,6 +20,10 @@
     "build:letter-garden": "pnpm --filter letter-garden build",
     "preview:letter-garden": "pnpm --filter letter-garden preview",
     "deploy:letter-garden": "pnpm --filter letter-garden deploy:cf",
+    "dev:home": "pnpm --filter home dev",
+    "build:home": "pnpm --filter home build",
+    "preview:home": "pnpm --filter home preview",
+    "deploy:home": "pnpm --filter home deploy:cf",
     "icons": "pnpm --filter @solver-suite/icons icons",
     "screenshots": "pnpm --filter @solver-suite/screenshots screenshots"
   },

@@ -7,6 +7,8 @@
   --mark: #cfd8f0;
   --error: #9b2c1f;
   --on-ink: #e3e5e2;
+  /* The accent on an ink surface (app icon tiles): each theme borrows the other's pencil. */
+  --pencil-on-ink: #9db3f2;
   --display: 'Old Standard TT', 'Times New Roman', serif;
   --sans: 'Libre Franklin Variable', 'Helvetica Neue', Arial, sans-serif;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -22,6 +24,7 @@
     --mark: #2c3a63;
     --error: #f08f7f;
     --on-ink: #16191a;
+    --pencil-on-ink: #2748a8;
     color-scheme: dark;
   }
 }
@@ -34,6 +37,7 @@
   --mark: #2c3a63;
   --error: #f08f7f;
   --on-ink: #16191a;
+  --pencil-on-ink: #2748a8;
   color-scheme: dark;
 }
 

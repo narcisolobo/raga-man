@@ -33,6 +33,19 @@ function bowler(role: Role, cx: number, base: number, brim: number, crown: numbe
   ];
 }
 
+/**
+ * A pencil lying along +x with its point at the origin: the sharpened cone and the
+ * painted body as one shape, then two cuts in the tile colour where the paint meets
+ * the bare wood and at the ferrule.
+ */
+function pencil(length: number, halfWidth: number, cone: number): Shape[] {
+  const band = (from: number, to: number) => `M${from} ${-halfWidth}L${to} ${-halfWidth}L${to} ${halfWidth}L${from} ${halfWidth}Z`;
+  return [
+    { role: 'accent', d: `M0 0L${cone} ${-halfWidth}L${length} ${-halfWidth}L${length} ${halfWidth}L${cone} ${halfWidth}Z` },
+    { role: 'tile', d: band(cone - 4, cone + 6) + band(length - 60, length - 52) },
+  ];
+}
+
 export const ICONS: IconSpec[] = [
   {
     // An "r" with a bowler hat floating above the stem, tipped as if in greeting.
@@ -53,5 +66,15 @@ export const ICONS: IconSpec[] = [
       { role: 'tile', d: 'M410 432Q470 500 560 540L556 546Q462 508 402 440Z' },
     ],
     bounds: [42, -238, 580, 556],
+  },
+  {
+    // The suite's index: an "s" with a pencil whose point rests on the top terminal,
+    // as if it had just written the letter.
+    app: 'home',
+    shapes: [
+      { role: 'letter', d: pathData(outline('s')) },
+      { transform: 'translate(392 430) rotate(62)', shapes: pencil(290, 34, 96) },
+    ],
+    bounds: [58, -12, 558, 702],
   },
 ];

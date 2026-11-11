@@ -1,6 +1,6 @@
 # Solver suite
 
-Small, static word-puzzle tools built with Astro and TypeScript. Each solver has its own input, search rules, word-data build, tests, and Cloudflare Worker deployment on its own subdomain.
+Small, static word-puzzle tools built with Astro and TypeScript, listed at [solversuite.app](https://solversuite.app/). Each solver has its own input, search rules, word-data build, tests, and Cloudflare Worker deployment on its own subdomain.
 
 <table>
   <tr>
@@ -40,6 +40,11 @@ pnpm dev:letter-garden   # development server on port 4322
 pnpm build:letter-garden
 pnpm preview:letter-garden
 pnpm deploy:letter-garden
+
+pnpm dev:home            # the suite index, on port 4320
+pnpm build:home
+pnpm preview:home
+pnpm deploy:home
 ```
 
 `pnpm dev` and `pnpm preview` are shorthand for raga-man. Use `pnpm --filter <app> <command>` for any other app command. There is no suite-wide deployment; each app owns its Wrangler configuration and output directory.
@@ -54,6 +59,7 @@ pnpm screenshots         # README screenshots, from each app's production build;
 ## Repository layout
 
 - `apps/raga-man/`, `apps/letter-garden/`: one directory per solver, each with its own search rules, dictionary policy, views, tests, and product records (`PRODUCT.md`, `SPEC.md`).
+- `apps/home/`: the suite index at the bare domain. A new solver goes in its `src/solvers.ts`; `pnpm icons` supplies its icon.
 - `packages/ui/`: the shared Astro shell, design tokens, fonts, letter squares, and theme toggle.
 - `packages/word-data/`: the shared trie codec and dictionary preparation.
 - `packages/icons/`: the app icon generator.

@@ -65,7 +65,7 @@ Ordered by how I would build them. "Reuse" means how much of raga-man's engine c
 1. Workspace preparation complete: raga-man lives in `apps/raga-man/`. The domain is `solversuite.app`.
 2. Shared word-data and UI modules and the letter-garden app are implemented. See `apps/letter-garden/README.md`.
 3. Five-letter helper.
-4. Pick the rest by what actually gets used. Add the index page at the bare domain once there are two or three to link to.
+4. Pick the rest by what actually gets used. The index page at the bare domain lives in `apps/home`; add each new solver to its `src/solvers.ts`.
 
 Each solver goes through the same loop: a short product brief, shape the page, build, review, then document what was built in the shared design system or the app's product records, as appropriate.
 
